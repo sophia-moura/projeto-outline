@@ -60,3 +60,35 @@ const produtos = [
         imagem: "produto-mochila-preta.jpeg"
     }
 ];
+
+const container = document.getElementById("products-container");
+
+function mostrarProdutos(lista) {
+    container.innerHTML = "";
+
+    lista.forEach(produto => {
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+
+        card.innerHTML = `
+            <div class="product-image">
+                <img src="${produto.imagem}" alt="${produto.nome}">
+            </div>
+
+            <div class="product-info">
+                <h3>${produto.nome}</h3>
+                <p class="price">R$ ${produto.preco.toFixed(2).replace(".", ",")}</p>
+                <p class="installments">
+                    ${produto.preco >= 100 ? "3x sem juros" : "2x sem juros"}
+                </p>
+                <button class="add-cart">
+                    Adicionar ao carrinho
+                </button>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+mostrarProdutos(produtos);
