@@ -3,61 +3,71 @@ const produtos = [
         nome: "Mochila Vinho",
         preco: 500.00,
         categoria: "mochilas",
-        imagem: "produto-mochila-vinho.jpeg"
+        estoque: 10,
+        imagem: "/imagens/jpeg/produto-mochila-vinho.jpeg"
     },
     {
         nome: "Caderno Azul",
         preco: 39.90,
         categoria: "cadernos",
-        imagem: "produto-caderno-azul.jpeg"
+        estoque: 15,
+        imagem: "/imagens/jpeg/produto-caderno-azul.jpeg"
     },
     {
         nome: "Kit de Canetas Coloridas",
         preco: 29.90,
         categoria: "canetas",
-        imagem: "produto-canetas-coloridas.jpeg"
+        estoque: 20,
+        imagem: "/imagens/jpeg/produto-canetas-coloridas.jpeg"
     },
     {
         nome: "Chaveiros",
         preco: 19.90,
         categoria: "chaveiros",
-        imagem: "produto-chaveiros.jpeg"
+        estoque: 25,
+        imagem: "/imagens/jpeg/produto-chaveiros.jpeg"
     },
     {
         nome: "Estojo Preto",
         preco: 59.90,
         categoria: "estojos",
-        imagem: "produto-estojo-preto.jpeg"
+        estoque: 10,
+        imagem: "/imagens/jpeg/produto-estojo-preto.jpeg"
     },
     {
         nome: "Kit de Lápis de Cor",
         preco: 50.00,
         categoria: "lapis",
-        imagem: "produto-lapis-de-cor.jpeg"
+        estoque: 50,
+        imagem: "/imagens/jpeg/produto-lapis-de-cor.jpeg"
     },
     {
         nome: "Mochila Azul",
         preco: 349.90,
         categoria: "mochilas",
-        imagem: "produto-mochila-azul.jpeg"
+        estoque: 0,
+        imagem: "/imagens/jpeg/produto-mochila-azul.jpeg"
     },
     {
         nome: "Necessaire Rosa",
         preco: 69.90,
         categoria: "necessaires",
-        imagem: "produto-necessaire-rosa.jpeg"
+        estoque: 20,
+        imagem: "/imagens/jpeg/produto-necessaire-rosa.jpeg"
     },
     {
         nome: "Kit de Necessaires",
         preco: 89.90,
         categoria: "necessaires",
-        imagem: "produto-necessaires.jpeg"
+        estoque: 10,
+        imagem: "/imagens/jpeg/produto-necessaires.jpeg"
     },
     {
         nome: "Mochila Preta",
         preco: 399.90,
         categoria: "mochilas",
-        imagem: "produto-mochila-preta.jpeg"
+        estoque: 10,
+        imagem: "/imagens/jpeg/produto-mochila-preta.jpeg"
     }
 ];
 
@@ -81,26 +91,54 @@ function atualizarContadorCarrinho() {
 }
 
 function adicionarAoCarrinho(nomeProduto) {
-    const produtoExistente = carrinho.find(
+
+    const produto = produtos.find(
         produto => produto.nome === nomeProduto
     );
 
-    if (produtoExistente) {
-        produtoExistente.quantidade++;
-    } else {
-        const produto = produtos.find(
-            produto => produto.nome === nomeProduto
-        );
-
-        carrinho.push({
-            nome: produto.nome,
-            preco: produto.preco,
-            imagem: produto.imagem,
-            quantidade: 1
-        });
+    if (!produto) {
+        return;
     }
 
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    // Produto sem estoque
+    if (produto.estoque === 0) {
+        alert("Produto sem estoque.");
+        return;
+    }
+
+    const produtoExistente = carrinho.find(
+        item => item.nome === nomeProduto
+    );
+
+    // Produto já está no carrinho
+    if (produtoExistente) {
+
+        // Verifica se ainda existe estoque disponível
+        if (produtoExistente.quantidade >= produto.estoque) {
+            alert(
+                `Não é possível adicionar mais unidades. ` +
+                `Estoque disponível: ${produto.estoque}.`
+            );
+            return;
+        }
+
+        produtoExistente.quantidade++;
+
+    } else {
+
+        carrinho.push({
+    nome: produto.nome,
+    preco: produto.preco,
+    imagem: produto.imagem,
+    quantidade: 1,
+    estoque: produto.estoque
+});
+    }
+
+    localStorage.setItem(
+        "carrinho",
+        JSON.stringify(carrinho)
+    );
 
     atualizarContadorCarrinho();
 }
@@ -189,6 +227,14 @@ function mostrarProdutos(lista, textoDigitado = "") {
                     }
                 </p>
 
+                <p class="stock">
+    ${
+        produto.estoque === 0
+            ? "Produto sem estoque"
+            : `Estoque disponível: ${produto.estoque}`
+    }
+</p>
+
                 <button class="add-cart">
                     Adicionar ao carrinho
                 </button>
@@ -196,7 +242,10 @@ function mostrarProdutos(lista, textoDigitado = "") {
         `;
 
         const botaoCarrinho = card.querySelector(".add-cart");
-
+if (produto.estoque === 0) {
+    botaoCarrinho.disabled = true;
+    botaoCarrinho.textContent = "Sem estoque";
+}
         botaoCarrinho.addEventListener("click", () => {
             adicionarAoCarrinho(produto.nome);
         });

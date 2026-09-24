@@ -78,7 +78,19 @@ function atualizarCarrinho() {
 
 function aumentarQuantidade(index) {
 
-    carrinho[index].quantidade++;
+    const produto = carrinho[index];
+
+    if (produto.quantidade >= produto.estoque) {
+
+        alert(
+            `Não é possível adicionar mais unidades. ` +
+            `Estoque disponível: ${produto.estoque}.`
+        );
+
+        return;
+    }
+
+    produto.quantidade++;
 
     salvarCarrinho();
 }

@@ -85,7 +85,7 @@ header{
 .news-banner {
     width: 100%;
     height: 450px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('banner.jpg'); 
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/imagens/jpg/banner.jpg'); 
     background-size: cover;       
     background-position: center; 
     background-repeat: no-repeat;
