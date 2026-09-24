@@ -77,10 +77,17 @@ function mostrarProdutos(lista) {
 
             <div class="product-info">
                 <h3>${produto.nome}</h3>
-                <p class="price">R$ ${produto.preco.toFixed(2).replace(".", ",")}</p>
-                <p class="installments">
-                    ${produto.preco >= 100 ? "3x sem juros" : "2x sem juros"}
+
+                <p class="price">
+                    R$ ${produto.preco.toFixed(2).replace(".", ",")}
                 </p>
+
+                <p class="installments">
+                    ${produto.preco >= 100
+                        ? "3x sem juros"
+                        : "2x sem juros"}
+                </p>
+
                 <button class="add-cart">
                     Adicionar ao carrinho
                 </button>
@@ -91,4 +98,38 @@ function mostrarProdutos(lista) {
     });
 }
 
+
+// Mostra todos os produtos quando a página é aberta
 mostrarProdutos(produtos);
+
+
+// Filtro por categoria
+const botoesCategoria = document.querySelectorAll(".category-btn");
+
+botoesCategoria.forEach(botao => {
+    botao.addEventListener("click", () => {
+
+        const categoriaSelecionada = botao.dataset.category;
+
+        // Remove o destaque dos outros botões
+        botoesCategoria.forEach(b => {
+            b.classList.remove("active");
+        });
+
+        // Destaca o botão selecionado
+        botao.classList.add("active");
+
+        // Mostra todos os produtos
+        if (categoriaSelecionada === "todos") {
+            mostrarProdutos(produtos);
+            return;
+        }
+
+        // Filtra os produtos pela categoria
+        const produtosFiltrados = produtos.filter(produto =>
+            produto.categoria === categoriaSelecionada
+        );
+
+        mostrarProdutos(produtosFiltrados);
+    });
+});
