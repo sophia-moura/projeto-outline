@@ -1,163 +1,55 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Outline | Produtos</title>
-
-    <link rel="stylesheet" href="produtos.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-    <header>
-
-        <a href="paginaInicial.html" class="logo-box">
-            <img src="logo.png" alt="Logo da Outline" class="logo">
-            <div class="Outline">Outline</div>
-        </a>
-
-        <div class="actions">
-
-            <a href="produtos.html" class="produtos-btn">
-                Produtos
-            </a>
-
-            <a href="carrinho.html" class="cart-btn">
-                <img src="carrinho.png" alt="Carrinho de compras" class="cart-icon">
-                <span id="cart-count">0</span>
-            </a>
-
-        </div>
-
+    <div class="announcement">Frete especial em compras selecionadas · novidades Outline</div>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="index.html" class="logo-box"><img src="logo.png" alt="" class="logo">
+            <div class="main-nav"><a href="produtos.html">Produtos</a><a href="index.html#lancamentos">Lançamentos</a><a href="index.html#beneficios">Sobre a Outline</a></div>
+            <div class="actions"><a href="produtos.html" class="icon-btn" aria-label="Buscar">⌕</a><a href="carrinho.html" class="icon-btn cart-btn" aria-label="Carrinho"><img src="carrinho.png" alt="" class="cart-icon"><span id="cart-count">0</span></a></div>
+        </nav>
     </header>
 
+    <main>
+        <section class="page-intro container">
+            <p class="eyebrow">Coleção Outline</p>
+            <h1 class="section-heading">Tudo para deixar sua rotina mais organizada.</h1>
+            <p class="section-copy">Explore mochilas, cadernos, acessórios e outros produtos pensados para estudo, trabalho e dia a dia.</p>
+        </section>
 
-    <section class="products-header">
-
-        <h1>CONHEÇA NOSSOS PRODUTOS</h1>
-
-        <p>
-            Encontre produtos de papelaria para deixar sua rotina ainda mais especial.
-        </p>
-
-    </section>
-
-
-    <section class="categories">
-
-        <button class="category-btn active" data-category="todos">
-            TODOS
-        </button>
-
-        <button class="category-btn" data-category="mochilas">
-            MOCHILAS
-        </button>
-
-        <button class="category-btn" data-category="estojos">
-            ESTOJOS
-        </button>
-
-        <button class="category-btn" data-category="cadernos">
-            CADERNOS
-        </button>
-
-        <button class="category-btn" data-category="canetas">
-            CANETAS
-        </button>
-
-        <button class="category-btn" data-category="necessaires">
-            NECESSAIRES
-        </button>
-
-        <button class="category-btn" data-category="chaveiros">
-            CHAVEIROS
-        </button>
-
-    </section>
-
-
-    <section class="search-section">
-
-        <input
-            type="text"
-            id="search-input"
-            placeholder="Buscar produto..."
-        >
-
-        <button id="search-button">
-            Buscar
-        </button>
-
-    </section>
-
-
-    <main
-        class="products-container"
-        id="products-container">
+        <section class="container">
+            <div class="catalog-toolbar">
+                <div class="categories">
+                    <button class="category-btn active" data-category="todos">Todos</button>
+                    <button class="category-btn" data-category="mochilas">Mochilas</button>
+                    <button class="category-btn" data-category="estojos">Estojos</button>
+                    <button class="category-btn" data-category="cadernos">Cadernos</button>
+                    <button class="category-btn" data-category="canetas">Canetas</button>
+                    <button class="category-btn" data-category="necessaires">Necessaires</button>
+                    <button class="category-btn" data-category="chaveiros">Chaveiros</button>
+                    <button class="category-btn" data-category="lapis">Lápis</button>
+                </div>
+                <div class="search-section"><input type="text" id="search-input" placeholder="Buscar produto..." aria-label="Buscar produto"><button id="search-button">Buscar</button></div>
+            </div>
+            <section class="products-container" id="products-container" aria-live="polite"></section>
+        </section>
     </main>
 
-
     <footer class="main-footer">
-
         <div class="footer-container">
-
-            <div class="footer-coluna">
-
-                <h4>INSTITUCIONAL</h4>
-
-                <ul>
-                    <li>Sobre a Loja</li>
-                    <li>Nossas Lojas</li>
-                    <li>Trabalhe Conosco</li>
-                </ul>
-
-            </div>
-
-
-            <div class="footer-coluna">
-
-                <h4>AJUDA E SUPORTE</h4>
-
-                <ul>
-                    <li>Fale Conosco</li>
-                    <li>Políticas de Troca</li>
-                    <li>Prazos de Entrega</li>
-                </ul>
-
-            </div>
-
-
-            <div class="footer-coluna">
-
-                <h4>SIGA-NOS</h4>
-
-                <ul>
-                    <li>Instagram</li>
-                    <li>Facebook</li>
-                    <li>Pinterest</li>
-                </ul>
-
-            </div>
-
+            <div class="footer-brand"><span class="Outline">Outline</span><p>Papelaria e acessórios para transformar o cotidiano em algo mais seu.</p></div>
+            <div class="footer-coluna"><h4>Institucional</h4><ul><li>Sobre a loja</li><li>Nossas lojas</li><li>Trabalhe conosco</li></ul></div>
+            <div class="footer-coluna"><h4>Ajuda</h4><ul><li>Fale conosco</li><li>Políticas de troca</li><li>Prazos de entrega</li></ul></div>
+            <div class="footer-coluna"><h4>Siga-nos</h4><ul><li>Instagram</li><li>Facebook</li><li>Pinterest</li></ul></div>
         </div>
-
-
-        <div class="footer-bottom">
-
-            <p>
-                &copy; 2026 Outline. Todos os direitos reservados.
-            </p>
-
-        </div>
-
+        <div class="footer-bottom">© 2026 Outline. Todos os direitos reservados.</div>
     </footer>
-
-
     <script src="produtos.js"></script>
-
 </body>
-
 </html>

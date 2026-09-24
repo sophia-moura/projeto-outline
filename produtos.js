@@ -105,15 +105,63 @@ function adicionarAoCarrinho(nomeProduto) {
     atualizarContadorCarrinho();
 }
 
-function mostrarProdutos(lista) {
+function removerEspacosDuplicados(texto) {
+    let resultado = texto;
+
+    while (resultado.includes("  ")) {
+        resultado = resultado.replace("  ", " ");
+    }
+
+    return resultado;
+}
+
+const normalizarTexto = texto => {
+    const semAcento = texto
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    return removerEspacosDuplicados(semAcento.toLowerCase().trim());
+};
+
+// FUNÇÃO CORRIGIDA: Agora usa .startsWith() em vez de .includes()
+function buscarProdutosPorNome(lista, textoDigitado) {
+    const termo = normalizarTexto(textoDigitado);
+    const encontrados = [];
+
+    if (termo === "") {
+        return lista;
+    }
+
+    for (let i = 0; i < lista.length; i++) {
+        const nomeProduto = normalizarTexto(lista[i].nome);
+
+        // Modificado aqui para buscar apenas pelo início do texto
+        if (nomeProduto.startsWith(termo)) {
+            encontrados.push(lista[i]);
+        }
+    }
+
+    return encontrados;
+}
+
+function mostrarMensagemSemResultado(textoDigitado) {
+    const mensagem = document.createElement("p");
+    mensagem.classList.add("no-products");
+
+    if (textoDigitado !== "") {
+        mensagem.textContent = `Nenhum produto encontrado para "${textoDigitado}". Tente buscar por outro nome.`;
+    } else {
+        mensagem.textContent = "Nenhum produto disponível nesta categoria.";
+    }
+
+    container.appendChild(mensagem);
+}
+
+function mostrarProdutos(lista, textoDigitado = "") {
     container.innerHTML = "";
 
     if (lista.length === 0) {
-        container.innerHTML = `
-            <p class="no-products">
-                Nenhum produto encontrado.
-            </p>
-        `;
+        mostrarMensagemSemResultado(textoDigitado);
         return;
     }
 
@@ -158,9 +206,7 @@ function mostrarProdutos(lista) {
 }
 
 function aplicarFiltros() {
-    const textoPesquisa = campoPesquisa.value
-        .toLowerCase()
-        .trim();
+    const textoDigitado = campoPesquisa.value.trim();
 
     let produtosFiltrados = produtos;
 
@@ -170,13 +216,9 @@ function aplicarFiltros() {
         );
     }
 
-    if (textoPesquisa !== "") {
-        produtosFiltrados = produtosFiltrados.filter(produto =>
-            produto.nome.toLowerCase().includes(textoPesquisa)
-        );
-    }
+    produtosFiltrados = buscarProdutosPorNome(produtosFiltrados, textoDigitado);
 
-    mostrarProdutos(produtosFiltrados);
+    mostrarProdutos(produtosFiltrados, textoDigitado);
 }
 
 botoesCategoria.forEach(botao => {

@@ -1,226 +1,97 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Outline | pagina inicial</title>
-    <link rel="stylesheet" href="Inicial.css"> 
-    </head>
+    <meta name="description" content="Outline — papelaria, mochilas e acessórios para uma rotina com mais estilo.">
+    <title>Outline | Papelaria & Acessórios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
-    <header>
-       <a href="index.html" class="logo-box ">
-            <img src="logo.png" alt="Logo da Outline" class="logo">
-            <div class="Outline">Outline</div>
-       </a
-    >
-        <div class="actions">
-            <!-- Botão de Produtos -->
-            <a href="produtos.html" class="produtos-btn">Conheça nossos produtos!</a>
+    <div class="announcement">Frete especial em compras selecionadas · novidades Outline</div>
 
-            <!-- "Botão" do Carrinho -->
-            <a href="#" class="cart-btn">
-            <img src="carrinho.png" alt="Carrinho de Compras" class="cart-icon">
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="index.html" class="logo-box" aria-label="Outline — início">
+                <img src="logo.png" alt="" class="logo">
             </a>
-        </div>
+            <div class="main-nav">
+                <a href="produtos.html">Produtos</a>
+                <a href="#lancamentos">Lançamentos</a>
+                <a href="#beneficios">Sobre a Outline</a>
+            </div>
+            <div class="actions">
+                <a href="produtos.html" class="icon-btn" aria-label="Buscar produtos">⌕</a>
+                <a href="carrinho.html" class="icon-btn cart-btn" aria-label="Abrir carrinho">
+                    <img src="carrinho.png" alt="" class="cart-icon">
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
     </header>
-    
-    <!-- imagem -->
-    <div class="news-banner">
-        <div class="banner-content">
-            <h1>Conheça nosso produtos!</h1>
-            <p>Fique por dentro das últimas novidades!</p>
-        </div>
-    </div>
 
-<!-- Seção de Busca e Categorias -->
-    <section class="categorias-section">
-    
-    <!-- Barra de Pesquisa -->
-    <div class="search-wrapper">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Buscar">
-            <img class="search-button">
-            </button>
-        </div>
-    </div>
-
-    <h2 class="section-titulo">PRINCIPAIS PRODUTOS</h2>
-
-    <!-- Grade de Círculos -->
-    <div class="categories-grid">
-        
-        <div class="category-item">
-            <div class="circle-thumb">
-                <img src="mochila3.jpg" alt="mochila vermelha">
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <p class="eyebrow">Coleção Outline</p>
+                <h1>Organize sua rotina com personalidade.</h1>
+                <p>Peças funcionais, bonitas e feitas para acompanhar seus dias — dos estudos aos momentos fora da rotina.</p>
+                <a href="produtos.html" class="btn btn-primary">Explorar produtos →</a>
             </div>
-            <span>MOCHILA</span>
-        </div>
+        </section>
 
-        <div class="category-item">
-            <div class="circle-thumb">
-                <img src="estojo.jpg" alt="estojo preto">
+        <section class="home-section container">
+            <p class="eyebrow">Explore por categoria</p>
+            <div class="section-head-row">
+                <h2 class="section-heading">Encontre o que combina com você.</h2>
+                <a href="produtos.html" class="btn btn-outline">Ver tudo</a>
             </div>
-            <span>ESTOJO</span>
-        </div>
 
-        <div class="category-item">
-            <div class="circle-thumb">
-                <img src="cadernos.jpg" alt="caderno preto">
+            <div class="category-grid">
+                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="mochila3.jpg" alt="Mochilas"></div><span>MOCHILAS</span></a>
+                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="estojo.jpg" alt="Estojos"></div><span>ESTOJOS</span></a>
+                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="cadernos.jpg" alt="Cadernos"></div><span>CADERNOS</span></a>
+                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="canetas.jpg" alt="Canetas"></div><span>CANETAS</span></a>
+                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="necessaire.jpg" alt="Necessaires"></div><span>NECESSAIRES</span></a>
+                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="chaveiros.jpg" alt="Chaveiros"></div><span>CHAVEIROS</span></a>
             </div>
-            <span>CADERNOS</span>
-        </div>
+        </section>
 
-        <div class="category-item">
-            <div class="circle-thumb">
-                <img src="canetas.jpg" alt="canetas">
+        <section class="home-section container" id="lancamentos">
+            <p class="eyebrow">Seleção da semana</p>
+            <div class="section-head-row">
+                <h2 class="section-heading">Lançamentos</h2>
+                <a href="produtos.html" class="btn btn-outline">Comprar agora</a>
             </div>
-            <span>CANETAS</span>
-        </div>
-
-        <div class="category-item">
-            <div class="circle-thumb">
-                <img src="necessaire.jpg" alt="necessaire">
+            <div class="products-grid">
+                <article class="product-card"><div class="product-image"><img src="Mochila1.png" alt="Mochila Outline X"></div><div class="product-info"><h3 class="product-name">MOCHILA OUTLINE X</h3><span class="product-price">R$ 500,00</span><span class="product-installments">ou 2x de R$ 250,00</span></div></article>
+                <article class="product-card"><div class="product-image"><img src="Mochila2.jpg" alt="Mochila Outline XXL"></div><div class="product-info"><h3 class="product-name">MOCHILA OUTLINE XXL</h3><span class="product-price">R$ 999,00</span><span class="product-installments">ou 4x de R$ 249,75</span></div></article>
+                <article class="product-card"><div class="product-image"><img src="mochila3.jpg" alt="Mochila Outline Color"></div><div class="product-info"><h3 class="product-name">OUTLINE COLOR</h3><span class="product-price">R$ 99,90</span><span class="product-installments">ou 2x de R$ 49,95</span></div></article>
+                <article class="product-card"><div class="product-image"><img src="lapis.jpg" alt="Kit de lápis de cor"></div><div class="product-info"><h3 class="product-name">KIT DE LÁPIS DE COR</h3><span class="product-price">R$ 50,00</span><span class="product-installments">ou 2x de R$ 25,00</span></div></article>
             </div>
-            <span>NECESSAIRE</span>
-        </div>
+        </section>
 
-        <div class="category-item">
-            <div class="circle-thumb">
-                <img src="chaveiros.jpg" alt="chaveiros">
+        <section class="home-section benefits" id="beneficios">
+            <div class="container">
+                <p class="eyebrow">Por que Outline?</p>
+                <h2 class="section-heading">Pensada para acompanhar sua rotina.</h2>
+                <div class="benefits-grid">
+                    <article class="benefit-card"><div class="benefit-icon"><img src="qualidade.png" alt=""></div><h3>Qualidade</h3><p>Mochilas, bolsas e acessórios pensados para unir estilo e praticidade.</p></article>
+                    <article class="benefit-card"><div class="benefit-icon"><img src="durabilidade.png" alt=""></div><h3>Durabilidade</h3><p>Produtos para fazer parte da sua rotina por muito mais tempo.</p></article>
+                    <article class="benefit-card"><div class="benefit-icon"><img src="segurança.png" alt=""></div><h3>Compra segura</h3><p>Uma experiência simples, clara e confiável do produto ao carrinho.</p></article>
+                </div>
             </div>
-            <span>CHAVEIROS</span>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand"><span class="Outline">Outline</span><p>Papelaria e acessórios para transformar o cotidiano em algo mais seu.</p></div>
+            <div class="footer-coluna"><h4>Institucional</h4><ul><li>Sobre a loja</li><li>Nossas lojas</li><li>Trabalhe conosco</li></ul></div>
+            <div class="footer-coluna"><h4>Ajuda</h4><ul><li>Fale conosco</li><li>Políticas de troca</li><li>Prazos de entrega</li></ul></div>
+            <div class="footer-coluna"><h4>Siga-nos</h4><ul><li>Instagram</li><li>Facebook</li><li>Pinterest</li></ul></div>
         </div>
-
-    </div>
-</section>
-
- <!-- section de principais produtos -->
-<section class="showcase-section">
-    <h2 class="showcase-titulo">LANÇAMENTOS</h2>
-    <div class="products-grid">
-        <!-- Card Produto 1 -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="Mochila1.png" alt="Mochila menor">
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">MOCHILA OUTLINE X</h3>
-                <span class="product-price">R$ 500,00</span>
-                <span class="product-installments">ou 2x de R$ 250,00</span>
-            </div>
-        </div>
-
-        <!-- Card Produto 2 -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="Mochila2.jpg" alt="mochila grande">
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">MOCHILA OUTLINE XXL</h3>
-                <span class="product-price">R$ 999,00</span>
-                <span class="product-installments">ou 4x de R$ 249,75</span>
-            </div>
-        </div>
-
-        <!-- Card Produto 3 -->
-        <div class="product-card">
-          <div class="product-image">
-                <img src="mochila3.jpg" alt="mochila azul">
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">OUTLINE COLOR</h3>
-                <span class="product-price">R$ 99,90</span>
-                <span class="product-installments">ou 2x de R$ 49,95</span>
-            </div>
-        </div>
-
-        <!-- Card Produto 4 -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="lapis.jpg" alt="Lapis de cor">
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">KIT DE LAPIS DE COR</h3>
-                <span class="product-price">R$ 50,00</span>
-                <span class="product-installments">ou 2x de R$ 25,00</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- section de "porque comprar conosco?" -->
-<section class="benefits-section">    
-    <h2 class="benefits-titulo">POR QUE COMPRAR CONOSCO?</h2>
-
-    <!-- Grade dos Diferenciais -->
-    <div class="benefits-grid">
-        
-        <!-- Bloco 1-->
-        <div class="benefit-card">
-            <div class="benefit-icon">
-                <img src="qualidade.png" alt="Qualidade" style="max-height: 100%; max-width: 100%; object-fit: contain;">
-            </div>
-            <h3 class="benefit-name">Qualidade:</h3>
-            <p class="benefit-text">Mochilas, bolsas e acessórios duráveis, resistentes e estilosos.</p>
-        </div>
-
-        <!-- Bloco 2 -->
-        <div class="benefit-card">
-            <div class="benefit-icon">
-                <img src="durabilidade.png" alt="Durabilidade" style="max-height: 100%; max-width: 100%; object-fit: contain;">
-            </div>
-            <h3 class="benefit-name">Durabilidade:</h3>
-            <p class="benefit-text">Investimento inteligente em produtos feitos para perdurar.</p>
-        </div>
-
-        <!-- Bloco 3 -->
-        <div class="benefit-card">
-            <div class="benefit-icon">
-                <img src="segurança.png" alt="Segurança" style="max-height: 100%; max-width: 100%; object-fit: contain;">
-            </div>
-            <h3 class="benefit-name">Segurança em Produtos Originais:</h3>
-            <p class="benefit-text">Compre com confiança em uma loja com produtos 100% autênticos.</p>
-        </div>
-
-    </div>
-</section>
-
-<!-- footer padraozinho -->
-<footer class="main-footer">
-    <div class="footer-container">
-        
-        <div class="footer-coluna">
-            <h4>INSTITUCIONAL</h4>
-            <ul>
-                <li>Sobre a Loja</li>
-                <li>Nossas Lojas</li>
-                <li>Trabalhe Conosco</li>
-            </ul>
-        </div>
-
-        <div class="footer-coluna">
-            <h4>AJUDA E SUPORTE</h4>
-            <ul>
-                <li>Fale Conosco</li>
-                <li>Políticas de Troca</li>
-                <li>Prazos de Entrega</li>
-            </ul>
-        </div>
-
-        <div class="footer-coluna">
-            <h4>SIGA-NOS</h4>
-            <ul>
-                <li>Instagram</li>
-                <li>Facebook</li>
-                <li>Pinterest</li>
-            </ul>
-        </div>
-
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2026 Outline. Todos os direitos reservados.</p>
-    </div>
-</footer>
-
+        <div class="footer-bottom">© 2026 Outline. Todos os direitos reservados.</div>
+    </footer>
 </body>
 </html>
