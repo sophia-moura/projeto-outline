@@ -1,26 +1,62 @@
 const produtos = [
     {
-        nome: "Mochila Outline Classic",
-        preco: 299.90,
+        nome: "Mochila Vinho",
+        preco: 500.00,
         categoria: "mochilas",
-        imagem: "Mochila1.png"
+        imagem: "produto-mochila-vinho.jpeg"
     },
     {
-        nome: "Mochila Outline Color",
+        nome: "Caderno Azul",
+        preco: 39.90,
+        categoria: "cadernos",
+        imagem: "produto-caderno-azul.jpeg"
+    },
+    {
+        nome: "Kit de Canetas Coloridas",
+        preco: 29.90,
+        categoria: "canetas",
+        imagem: "produto-canetas-coloridas.jpeg"
+    },
+    {
+        nome: "Chaveiros",
+        preco: 19.90,
+        categoria: "chaveiros",
+        imagem: "produto-chaveiros.jpeg"
+    },
+    {
+        nome: "Estojo Preto",
+        preco: 59.90,
+        categoria: "estojos",
+        imagem: "produto-estojo-preto.jpeg"
+    },
+    {
+        nome: "Kit de Lápis de Cor",
+        preco: 50.00,
+        categoria: "lapis",
+        imagem: "produto-lapis-de-cor.jpeg"
+    },
+    {
+        nome: "Mochila Azul",
         preco: 349.90,
         categoria: "mochilas",
-        imagem: "Mochila2.jpg"
+        imagem: "produto-mochila-azul.jpeg"
     },
     {
-        nome: "Mochila Outline Urban",
+        nome: "Necessaire Rosa",
+        preco: 69.90,
+        categoria: "necessaires",
+        imagem: "produto-necessaire-rosa.jpeg"
+    },
+    {
+        nome: "Kit de Necessaires",
+        preco: 89.90,
+        categoria: "necessaires",
+        imagem: "produto-necessaires.jpeg"
+    },
+    {
+        nome: "Mochila Preta",
         preco: 399.90,
         categoria: "mochilas",
-        imagem: "mochila3.jpg"
-    },
-    {
-        nome: "Mochila Outline Mini",
-        preco: 249.90,
-        categoria: "mochilas",
-        imagem: "Mochila4.jpg"
+        imagem: "produto-mochila-preta.jpeg"
     }
 ];
