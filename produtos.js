@@ -62,6 +62,48 @@ const produtos = [
 ];
 
 const container = document.getElementById("products-container");
+const campoPesquisa = document.getElementById("search-input");
+const botaoPesquisa = document.getElementById("search-button");
+const botoesCategoria = document.querySelectorAll(".category-btn");
+const contadorCarrinho = document.getElementById("cart-count");
+
+let categoriaAtual = "todos";
+
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+function atualizarContadorCarrinho() {
+    const quantidade = carrinho.reduce(
+        (total, produto) => total + produto.quantidade,
+        0
+    );
+
+    contadorCarrinho.textContent = quantidade;
+}
+
+function adicionarAoCarrinho(nomeProduto) {
+    const produtoExistente = carrinho.find(
+        produto => produto.nome === nomeProduto
+    );
+
+    if (produtoExistente) {
+        produtoExistente.quantidade++;
+    } else {
+        const produto = produtos.find(
+            produto => produto.nome === nomeProduto
+        );
+
+        carrinho.push({
+            nome: produto.nome,
+            preco: produto.preco,
+            imagem: produto.imagem,
+            quantidade: 1
+        });
+    }
+
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+    atualizarContadorCarrinho();
+}
 
 function mostrarProdutos(lista) {
     container.innerHTML = "";
@@ -92,9 +134,11 @@ function mostrarProdutos(lista) {
                 </p>
 
                 <p class="installments">
-                    ${produto.preco >= 100
-                        ? "3x sem juros"
-                        : "2x sem juros"}
+                    ${
+                        produto.preco >= 100
+                            ? "3x sem juros"
+                            : "2x sem juros"
+                    }
                 </p>
 
                 <button class="add-cart">
@@ -103,25 +147,40 @@ function mostrarProdutos(lista) {
             </div>
         `;
 
+        const botaoCarrinho = card.querySelector(".add-cart");
+
+        botaoCarrinho.addEventListener("click", () => {
+            adicionarAoCarrinho(produto.nome);
+        });
+
         container.appendChild(card);
     });
 }
 
+function aplicarFiltros() {
+    const textoPesquisa = campoPesquisa.value
+        .toLowerCase()
+        .trim();
 
-// Categoria selecionada atualmente
-let categoriaAtual = "todos";
+    let produtosFiltrados = produtos;
 
+    if (categoriaAtual !== "todos") {
+        produtosFiltrados = produtosFiltrados.filter(produto =>
+            produto.categoria === categoriaAtual
+        );
+    }
 
-// Mostra todos os produtos inicialmente
-mostrarProdutos(produtos);
+    if (textoPesquisa !== "") {
+        produtosFiltrados = produtosFiltrados.filter(produto =>
+            produto.nome.toLowerCase().includes(textoPesquisa)
+        );
+    }
 
-
-// FILTRO POR CATEGORIA
-const botoesCategoria = document.querySelectorAll(".category-btn");
+    mostrarProdutos(produtosFiltrados);
+}
 
 botoesCategoria.forEach(botao => {
     botao.addEventListener("click", () => {
-
         categoriaAtual = botao.dataset.category;
 
         botoesCategoria.forEach(b => {
@@ -134,44 +193,14 @@ botoesCategoria.forEach(botao => {
     });
 });
 
-
-// PESQUISA
-const campoPesquisa = document.getElementById("search-input");
-const botaoPesquisa = document.querySelector(".search-section button");
-
-function aplicarFiltros() {
-
-    const textoPesquisa = campoPesquisa.value
-        .toLowerCase()
-        .trim();
-
-    let produtosFiltrados = produtos;
-
-    // Filtro por categoria
-    if (categoriaAtual !== "todos") {
-        produtosFiltrados = produtosFiltrados.filter(produto =>
-            produto.categoria === categoriaAtual
-        );
-    }
-
-    // Filtro pela pesquisa
-    if (textoPesquisa !== "") {
-        produtosFiltrados = produtosFiltrados.filter(produto =>
-            produto.nome.toLowerCase().includes(textoPesquisa)
-        );
-    }
-
-    mostrarProdutos(produtosFiltrados);
-}
-
-
-// Clicar no botão de pesquisa
 botaoPesquisa.addEventListener("click", aplicarFiltros);
 
-
-// Pesquisar apertando Enter
 campoPesquisa.addEventListener("keydown", evento => {
     if (evento.key === "Enter") {
         aplicarFiltros();
     }
 });
+
+mostrarProdutos(produtos);
+
+atualizarContadorCarrinho();
