@@ -66,6 +66,15 @@ const container = document.getElementById("products-container");
 function mostrarProdutos(lista) {
     container.innerHTML = "";
 
+    if (lista.length === 0) {
+        container.innerHTML = `
+            <p class="no-products">
+                Nenhum produto encontrado.
+            </p>
+        `;
+        return;
+    }
+
     lista.forEach(produto => {
         const card = document.createElement("div");
         card.classList.add("product-card");
@@ -99,37 +108,70 @@ function mostrarProdutos(lista) {
 }
 
 
-// Mostra todos os produtos quando a página é aberta
+// Categoria selecionada atualmente
+let categoriaAtual = "todos";
+
+
+// Mostra todos os produtos inicialmente
 mostrarProdutos(produtos);
 
 
-// Filtro por categoria
+// FILTRO POR CATEGORIA
 const botoesCategoria = document.querySelectorAll(".category-btn");
 
 botoesCategoria.forEach(botao => {
     botao.addEventListener("click", () => {
 
-        const categoriaSelecionada = botao.dataset.category;
+        categoriaAtual = botao.dataset.category;
 
-        // Remove o destaque dos outros botões
         botoesCategoria.forEach(b => {
             b.classList.remove("active");
         });
 
-        // Destaca o botão selecionado
         botao.classList.add("active");
 
-        // Mostra todos os produtos
-        if (categoriaSelecionada === "todos") {
-            mostrarProdutos(produtos);
-            return;
-        }
-
-        // Filtra os produtos pela categoria
-        const produtosFiltrados = produtos.filter(produto =>
-            produto.categoria === categoriaSelecionada
-        );
-
-        mostrarProdutos(produtosFiltrados);
+        aplicarFiltros();
     });
+});
+
+
+// PESQUISA
+const campoPesquisa = document.getElementById("search-input");
+const botaoPesquisa = document.querySelector(".search-section button");
+
+function aplicarFiltros() {
+
+    const textoPesquisa = campoPesquisa.value
+        .toLowerCase()
+        .trim();
+
+    let produtosFiltrados = produtos;
+
+    // Filtro por categoria
+    if (categoriaAtual !== "todos") {
+        produtosFiltrados = produtosFiltrados.filter(produto =>
+            produto.categoria === categoriaAtual
+        );
+    }
+
+    // Filtro pela pesquisa
+    if (textoPesquisa !== "") {
+        produtosFiltrados = produtosFiltrados.filter(produto =>
+            produto.nome.toLowerCase().includes(textoPesquisa)
+        );
+    }
+
+    mostrarProdutos(produtosFiltrados);
+}
+
+
+// Clicar no botão de pesquisa
+botaoPesquisa.addEventListener("click", aplicarFiltros);
+
+
+// Pesquisar apertando Enter
+campoPesquisa.addEventListener("keydown", evento => {
+    if (evento.key === "Enter") {
+        aplicarFiltros();
+    }
 });
