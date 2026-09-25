@@ -10,9 +10,11 @@
     <div class="announcement">Frete especial em compras selecionadas · novidades Outline</div>
     <header class="site-header">
         <nav class="navbar">
-            <a href="index.html" class="logo-box"><img src="/imagens/png/logo.png" alt="" class="logo">
+            <a href="index.html" class="logo-box" aria-label="Outline — início">
+                <img src="imagens/png/logo.png" alt="" class="logo">
+            </a>
             <div class="main-nav"><a href="produtos.html">Produtos</a><a href="index.html#lancamentos">Lançamentos</a><a href="index.html#beneficios">Sobre a Outline</a></div>
-            <div class="actions"><a href="produtos.html" class="icon-btn" aria-label="Buscar">⌕</a><a href="carrinho.html" class="icon-btn cart-btn" aria-label="Carrinho"><img src="carrinho.png" alt="" class="cart-icon"><span id="cart-count">0</span></a></div>
+            <div class="actions"><a href="produtos.html" class="icon-btn" aria-label="Buscar">⌕</a><a href="carrinho.html" class="icon-btn cart-btn" aria-label="Carrinho"><img src="imagens/png/carrinho.png" alt="" class="cart-icon"><span id="cart-count">0</span></a></div>
         </nav>
     </header>
 
@@ -26,7 +28,10 @@
             <div id="cart-items"></div>
             <aside class="cart-summary">
                 <h2>Resumo da compra</h2>
-                <p><span>Total</span><strong id="cart-total">R$ 0,00</strong></p>
+                <p><span>Quantidade de itens</span><strong id="cart-quantity">0</strong></p>
+                <p><span>Subtotal</span><strong id="cart-subtotal">R$ 0,00</strong></p>
+                <p><span>Desconto</span><strong id="cart-discount">R$ 0,00</strong></p>
+                <p class="cart-final"><span>Valor final</span><strong id="cart-total">R$ 0,00</strong></p>
                 <button id="finalizar-compra">Finalizar compra</button>
             </aside>
         </section>

@@ -1,74 +1,43 @@
-const produtos = [
-    {
-        nome: "Mochila Vinho",
-        preco: 500.00,
-        categoria: "mochilas",
-        estoque: 10,
-        imagem: "/imagens/jpeg/produto-mochila-vinho.jpeg"
-    },
-    {
-        nome: "Caderno Azul",
-        preco: 39.90,
-        categoria: "cadernos",
-        estoque: 15,
-        imagem: "/imagens/jpeg/produto-caderno-azul.jpeg"
-    },
-    {
-        nome: "Kit de Canetas Coloridas",
-        preco: 29.90,
-        categoria: "canetas",
-        estoque: 20,
-        imagem: "/imagens/jpeg/produto-canetas-coloridas.jpeg"
-    },
-    {
-        nome: "Chaveiros",
-        preco: 19.90,
-        categoria: "chaveiros",
-        estoque: 25,
-        imagem: "/imagens/jpeg/produto-chaveiros.jpeg"
-    },
-    {
-        nome: "Estojo Preto",
-        preco: 59.90,
-        categoria: "estojos",
-        estoque: 10,
-        imagem: "/imagens/jpeg/produto-estojo-preto.jpeg"
-    },
-    {
-        nome: "Kit de Lápis de Cor",
-        preco: 50.00,
-        categoria: "lapis",
-        estoque: 50,
-        imagem: "/imagens/jpeg/produto-lapis-de-cor.jpeg"
-    },
-    {
-        nome: "Mochila Azul",
-        preco: 349.90,
-        categoria: "mochilas",
-        estoque: 0,
-        imagem: "/imagens/jpeg/produto-mochila-azul.jpeg"
-    },
-    {
-        nome: "Necessaire Rosa",
-        preco: 69.90,
-        categoria: "necessaires",
-        estoque: 20,
-        imagem: "/imagens/jpeg/produto-necessaire-rosa.jpeg"
-    },
-    {
-        nome: "Kit de Necessaires",
-        preco: 89.90,
-        categoria: "necessaires",
-        estoque: 10,
-        imagem: "/imagens/jpeg/produto-necessaires.jpeg"
-    },
-    {
-        nome: "Mochila Preta",
-        preco: 399.90,
-        categoria: "mochilas",
-        estoque: 10,
-        imagem: "/imagens/jpeg/produto-mochila-preta.jpeg"
+class Produto {
+    constructor(codigo, nome, categoria, preco, estoque, imagem) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.categoria = categoria;
+        this.preco = preco;
+        this.estoque = estoque;
+        this.imagem = imagem;
     }
+
+    disponivel() {
+        return this.estoque > 0;
+    }
+
+    reduzirEstoque(quantidade) {
+        this.estoque -= quantidade;
+    }
+}
+
+const nomesCategoria = {
+    mochilas: "Mochilas",
+    cadernos: "Cadernos",
+    canetas: "Canetas",
+    chaveiros: "Chaveiros",
+    estojos: "Estojos",
+    lapis: "Lápis",
+    necessaires: "Necessaires"
+};
+
+const produtos = [
+    new Produto("OUT-001", "Mochila Vinho", "mochilas", 500.00, 10, "imagens/jpeg/produto-mochila-vinho.jpeg"),
+    new Produto("OUT-002", "Caderno Azul", "cadernos", 39.90, 15, "imagens/jpeg/produto-caderno-azul.jpeg"),
+    new Produto("OUT-003", "Kit de Canetas Coloridas", "canetas", 29.90, 20, "imagens/jpeg/produto-canetas-coloridas.jpeg"),
+    new Produto("OUT-004", "Chaveiros", "chaveiros", 19.90, 25, "imagens/jpeg/produto-chaveiros.jpeg"),
+    new Produto("OUT-005", "Estojo Preto", "estojos", 59.90, 10, "imagens/jpeg/produto-estojo-preto.jpeg"),
+    new Produto("OUT-006", "Kit de Lápis de Cor", "lapis", 50.00, 50, "imagens/jpeg/produto-lapis-de-cor.jpeg"),
+    new Produto("OUT-007", "Mochila Azul", "mochilas", 349.90, 0, "imagens/jpeg/produto-mochila-azul.jpeg"),
+    new Produto("OUT-008", "Necessaire Rosa", "necessaires", 69.90, 20, "imagens/jpeg/produto-necessaire-rosa.jpeg"),
+    new Produto("OUT-009", "Kit de Necessaires", "necessaires", 89.90, 10, "imagens/jpeg/produto-necessaires.jpeg"),
+    new Produto("OUT-010", "Mochila Preta", "mochilas", 399.90, 10, "imagens/jpeg/produto-mochila-preta.jpeg")
 ];
 
 const container = document.getElementById("products-container");
@@ -90,30 +59,27 @@ function atualizarContadorCarrinho() {
     contadorCarrinho.textContent = quantidade;
 }
 
-function adicionarAoCarrinho(nomeProduto) {
+function adicionarAoCarrinho(codigoProduto) {
 
     const produto = produtos.find(
-        produto => produto.nome === nomeProduto
+        produto => produto.codigo === codigoProduto
     );
 
     if (!produto) {
         return;
     }
 
-    // Produto sem estoque
-    if (produto.estoque === 0) {
+    if (!produto.disponivel()) {
         alert("Produto sem estoque.");
         return;
     }
 
     const produtoExistente = carrinho.find(
-        item => item.nome === nomeProduto
+        item => item.codigo === codigoProduto
     );
 
-    // Produto já está no carrinho
     if (produtoExistente) {
 
-        // Verifica se ainda existe estoque disponível
         if (produtoExistente.quantidade >= produto.estoque) {
             alert(
                 `Não é possível adicionar mais unidades. ` +
@@ -127,12 +93,13 @@ function adicionarAoCarrinho(nomeProduto) {
     } else {
 
         carrinho.push({
-    nome: produto.nome,
-    preco: produto.preco,
-    imagem: produto.imagem,
-    quantidade: 1,
-    estoque: produto.estoque
-});
+            codigo: produto.codigo,
+            nome: produto.nome,
+            preco: produto.preco,
+            imagem: produto.imagem,
+            quantidade: 1,
+            estoque: produto.estoque
+        });
     }
 
     localStorage.setItem(
@@ -161,7 +128,6 @@ const normalizarTexto = texto => {
     return removerEspacosDuplicados(semAcento.toLowerCase().trim());
 };
 
-// FUNÇÃO CORRIGIDA: Agora usa .startsWith() em vez de .includes()
 function buscarProdutosPorNome(lista, textoDigitado) {
     const termo = normalizarTexto(textoDigitado);
     const encontrados = [];
@@ -173,8 +139,7 @@ function buscarProdutosPorNome(lista, textoDigitado) {
     for (let i = 0; i < lista.length; i++) {
         const nomeProduto = normalizarTexto(lista[i].nome);
 
-        // Modificado aqui para buscar apenas pelo início do texto
-        if (nomeProduto.startsWith(termo)) {
+        if (nomeProduto.includes(termo)) {
             encontrados.push(lista[i]);
         }
     }
@@ -207,12 +172,16 @@ function mostrarProdutos(lista, textoDigitado = "") {
         const card = document.createElement("div");
         card.classList.add("product-card");
 
+        const disponivel = produto.estoque > 0;
+
         card.innerHTML = `
             <div class="product-image">
                 <img src="${produto.imagem}" alt="${produto.nome}">
             </div>
 
             <div class="product-info">
+                <span class="product-category">${nomesCategoria[produto.categoria] || produto.categoria}</span>
+
                 <h3>${produto.nome}</h3>
 
                 <p class="price">
@@ -227,13 +196,9 @@ function mostrarProdutos(lista, textoDigitado = "") {
                     }
                 </p>
 
-                <p class="stock">
-    ${
-        produto.estoque === 0
-            ? "Produto sem estoque"
-            : `Estoque disponível: ${produto.estoque}`
-    }
-</p>
+                <p class="stock ${disponivel ? "" : "indisponivel"}">
+                    ${disponivel ? `Estoque disponível: ${produto.estoque}` : "Produto sem estoque"}
+                </p>
 
                 <button class="add-cart">
                     Adicionar ao carrinho
@@ -242,12 +207,14 @@ function mostrarProdutos(lista, textoDigitado = "") {
         `;
 
         const botaoCarrinho = card.querySelector(".add-cart");
-if (produto.estoque === 0) {
-    botaoCarrinho.disabled = true;
-    botaoCarrinho.textContent = "Sem estoque";
-}
+
+        if (!disponivel) {
+            botaoCarrinho.disabled = true;
+            botaoCarrinho.textContent = "Sem estoque";
+        }
+
         botaoCarrinho.addEventListener("click", () => {
-            adicionarAoCarrinho(produto.nome);
+            adicionarAoCarrinho(produto.codigo);
         });
 
         container.appendChild(card);
