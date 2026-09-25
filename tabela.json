@@ -1,0 +1,10 @@
+[
+    {
+    "codigo": "OUT-001",
+    "nome": "Mochila Vinho",
+    "categoria": "Acessórios",
+    "preco": 199.99,
+    "estoque": 10,
+    "imagem": "mochila-vinho.jpg"
+}
+]
