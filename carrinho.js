@@ -3,13 +3,70 @@ const cartTotal = document.getElementById("cart-total");
 const cartCount = document.getElementById("cart-count");
 const finalizarCompra = document.getElementById("finalizar-compra");
 
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+class Carrinho {
+    constructor() {
+        this.itens = JSON.parse(localStorage.getItem("carrinho")) || [];
+    }
+
+    aumentarQuantidade(index) {
+        const produto = this.itens[index];
+
+        if (produto.quantidade >= produto.estoque) {
+
+            alert(
+                `Não é possível adicionar mais unidades. ` +
+                `Estoque disponível: ${produto.estoque}.`
+            );
+
+            return;
+        }
+
+        produto.quantidade++;
+
+        this.salvar();
+    }
+
+    diminuirQuantidade(index) {
+
+        if (this.itens[index].quantidade > 1) {
+
+            this.itens[index].quantidade--;
+
+        } else {
+
+            this.itens.splice(index, 1);
+
+        }
+
+        this.salvar();
+    }
+
+    removerProduto(index) {
+
+        this.itens.splice(index, 1);
+
+        this.salvar();
+    }
+
+    salvar() {
+
+        localStorage.setItem(
+            "carrinho",
+            JSON.stringify(this.itens)
+        );
+
+        atualizarCarrinho();
+    }
+}
+
+const carrinho = new Carrinho();
 
 function atualizarCarrinho() {
 
     cartItems.innerHTML = "";
 
-    if (carrinho.length === 0) {
+    if (carrinho.itens.length === 0) {
 
         cartItems.innerHTML = `
             <p class="empty-cart">
@@ -26,7 +83,7 @@ function atualizarCarrinho() {
     let total = 0;
     let quantidadeTotal = 0;
 
-    carrinho.forEach((produto, index) => {
+    carrinho.itens.forEach((produto, index) => {
 
         total += produto.preco * produto.quantidade;
         quantidadeTotal += produto.quantidade;
@@ -78,62 +135,28 @@ function atualizarCarrinho() {
 
 function aumentarQuantidade(index) {
 
-    const produto = carrinho[index];
+    carrinho.aumentarQuantidade(index);
 
-    if (produto.quantidade >= produto.estoque) {
-
-        alert(
-            `Não é possível adicionar mais unidades. ` +
-            `Estoque disponível: ${produto.estoque}.`
-        );
-
-        return;
-    }
-
-    produto.quantidade++;
-
-    salvarCarrinho();
 }
 
 
 function diminuirQuantidade(index) {
 
-    if (carrinho[index].quantidade > 1) {
+    carrinho.diminuirQuantidade(index);
 
-        carrinho[index].quantidade--;
-
-    } else {
-
-        carrinho.splice(index, 1);
-
-    }
-
-    salvarCarrinho();
 }
 
 
 function removerProduto(index) {
 
-    carrinho.splice(index, 1);
+    carrinho.removerProduto(index);
 
-    salvarCarrinho();
-}
-
-
-function salvarCarrinho() {
-
-    localStorage.setItem(
-        "carrinho",
-        JSON.stringify(carrinho)
-    );
-
-    atualizarCarrinho();
 }
 
 
 finalizarCompra.addEventListener("click", () => {
 
-    if (carrinho.length === 0) {
+    if (carrinho.itens.length === 0) {
 
         alert("Seu carrinho está vazio.");
 
