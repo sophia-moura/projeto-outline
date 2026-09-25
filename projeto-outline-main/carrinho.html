@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outline | Carrinho</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="carrinho.css">
+</head>
+<body>
+    <div class="announcement">Frete especial em compras selecionadas · novidades Outline</div>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="index.html" class="logo-box"><img src="/imagens/png/logo.png" alt="" class="logo">
+            <div class="main-nav"><a href="produtos.html">Produtos</a><a href="index.html#lancamentos">Lançamentos</a><a href="index.html#beneficios">Sobre a Outline</a></div>
+            <div class="actions"><a href="produtos.html" class="icon-btn" aria-label="Buscar">⌕</a><a href="carrinho.html" class="icon-btn cart-btn" aria-label="Carrinho"><img src="/imagens/png/carrinho.png" alt="" class="cart-icon"><span id="cart-count">0</span></a></div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cart-header container">
+            <p class="eyebrow">Seu pedido</p>
+            <h1 class="section-heading">Meu carrinho</h1>
+            <p class="section-copy">Revise seus produtos antes de finalizar.</p>
+        </section>
+        <section class="cart-container container">
+            <div id="cart-items"></div>
+            <aside class="cart-summary">
+                <h2>Resumo da compra</h2>
+                <p><span>Quantidade de itens</span><strong id="cart-quantity">0</strong></p>
+                <p><span>Subtotal</span><strong id="cart-subtotal">R$ 0,00</strong></p>
+                <p><span>Desconto</span><strong id="cart-discount">R$ 0,00</strong></p>
+                <p><span>Valor final</span><strong id="cart-final-total">R$ 0,00</strong></p>
+                <button id="finalizar-compra">Finalizar compra</button>
+            </aside>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand"><span class="Outline">Outline</span><p>Papelaria e acessórios para transformar o cotidiano em algo mais seu.</p></div>
+            <div class="footer-coluna"><h4>Institucional</h4><ul><li>Sobre a loja</li><li>Nossas lojas</li><li>Trabalhe conosco</li></ul></div>
+            <div class="footer-coluna"><h4>Ajuda</h4><ul><li>Fale conosco</li><li>Políticas de troca</li><li>Prazos de entrega</li></ul></div>
+            <div class="footer-coluna"><h4>Siga-nos</h4><ul><li>Instagram</li><li>Facebook</li><li>Pinterest</li></ul></div>
+        </div>
+        <div class="footer-bottom">© 2026 Outline. Todos os direitos reservados.</div>
+    </footer>
+    <script src="carrinho.js"></script>
+</body>
+</html>
