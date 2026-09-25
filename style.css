@@ -94,6 +94,7 @@ button { cursor: pointer; }
     height: 2px;
     background: var(--orange);
     transition: right .25s ease;
+    
 }
 .main-nav a:hover::after { right: 0; }
 
@@ -206,6 +207,7 @@ button { cursor: pointer; }
     background: var(--cream-2);
     border: 1px solid var(--line);
     margin-bottom: 14px;
+    object-fit: fill;
 }
 .category-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
 .category-item:hover img { transform: scale(1.06); }
