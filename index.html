@@ -22,12 +22,25 @@
                 <a href="#beneficios">Sobre a Outline</a>
             </div>
             <div class="actions">
-                <a href="produtos.html" class="icon-btn" aria-label="Buscar produtos">⌕</a>
-                <a href="carrinho.html" class="icon-btn cart-btn" aria-label="Abrir carrinho">
-                    <img src="imagens/png/carrinho.png" alt="" class="cart-icon">
-                    <span id="cart-count">0</span>
-                </a>
-            </div>
+    <a href="produtos.html" class="icon-btn" aria-label="Buscar produtos">⌕</a>
+
+    <div class="account-area" id="account-area">
+        <div id="guest-actions">
+            <a href="cadastro.html">Cadastrar</a>
+            <a href="login.html">Entrar</a>
+        </div>
+
+        <div id="user-actions" hidden>
+            <span id="user-name"></span>
+            <button type="button" id="logout-button">Sair</button>
+        </div>
+    </div>
+
+    <a href="carrinho.html" class="icon-btn cart-btn" aria-label="Abrir carrinho">
+        <img src="imagens/png/carrinho.png" alt="" class="cart-icon">
+        <span id="cart-count">0</span>
+    </a>
+</div>
         </nav>
     </header>
 
