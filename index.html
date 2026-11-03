@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,91 +8,292 @@
     <title>Outline | Papelaria & Acessórios</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="announcement">Frete especial em compras selecionadas · novidades Outline</div>
+
+    <div class="announcement">
+        Frete especial em compras selecionadas · novidades Outline
+    </div>
 
     <header class="site-header">
         <nav class="navbar">
+
             <a href="index.html" class="logo-box" aria-label="Outline — início">
                 <img src="/imagens/png/logo.png" alt="" class="logo">
             </a>
+
             <div class="main-nav">
                 <a href="produtos.html">Produtos</a>
                 <a href="#lancamentos">Lançamentos</a>
                 <a href="#beneficios">Sobre a Outline</a>
             </div>
+
             <div class="actions">
-                <a href="produtos.html" class="icon-btn" aria-label="Buscar produtos">⌕</a>
+
+                <a href="produtos.html" class="icon-btn" aria-label="Buscar produtos">
+                    ⌕
+                </a>
+
                 <a href="carrinho.html" class="icon-btn cart-btn" aria-label="Abrir carrinho">
                     <img src="/imagens/png/carrinho.png" alt="" class="cart-icon">
                     <span id="cart-count">0</span>
                 </a>
+
+                <!-- Área de login e usuário -->
+                <div id="auth-area" class="auth-area"></div>
+
             </div>
         </nav>
     </header>
 
     <main>
+
+        <!-- BANNER PRINCIPAL -->
         <section class="hero">
             <div class="hero-content">
+
                 <p class="eyebrow">Coleção Outline</p>
+
                 <h1>Organize sua rotina com personalidade.</h1>
-                <p>Peças funcionais, bonitas e feitas para acompanhar seus dias — dos estudos aos momentos fora da rotina.</p>
-                <a href="produtos.html" class="btn btn-primary">Explorar produtos →</a>
+
+                <p>
+                    Peças funcionais, bonitas e feitas para acompanhar seus dias
+                    — dos estudos aos momentos fora da rotina.
+                </p>
+
+                <a href="produtos.html" class="btn btn-primary">
+                    Explorar produtos →
+                </a>
+
             </div>
         </section>
 
+        <!-- CATEGORIAS -->
         <section class="home-section container">
+
             <p class="eyebrow">Explore por categoria</p>
+
             <div class="section-head-row">
-                <h2 class="section-heading">Encontre o que combina com você.</h2>
-                <a href="produtos.html" class="btn btn-outline">Ver tudo</a>
+                <h2 class="section-heading">
+                    Encontre o que combina com você.
+                </h2>
+
+                <a href="produtos.html" class="btn btn-outline">
+                    Ver tudo
+                </a>
             </div>
 
             <div class="category-grid">
-                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="/imagens/jpg/mochila3.jpg" alt="Mochilas"></div><span>MOCHILAS</span></a>
-                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="/imagens/jpg/estojo.jpg" alt="Estojos"></div><span>ESTOJOS</span></a>
-                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="/imagens/jpg/cadernos.jpg" alt="Cadernos"></div><span>CADERNOS</span></a>
-                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="/imagens/jpg/canetas.jpg" alt="Canetas"></div><span>CANETAS</span></a>
-                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="/imagens/jpg/necessaire.jpg" alt="Necessaires"></div><span>NECESSAIRES</span></a>
-                <a class="category-item" href="produtos.html"><div class="category-thumb"><img src="/imagens/jpg/chaveiros.jpg" alt="Chaveiros"></div><span>CHAVEIROS</span></a>
+
+                <a class="category-item" href="produtos.html">
+                    <div class="category-thumb">
+                        <img src="/imagens/jpg/mochila3.jpg" alt="Mochilas">
+                    </div>
+                    <span>MOCHILAS</span>
+                </a>
+
+                <a class="category-item" href="produtos.html">
+                    <div class="category-thumb">
+                        <img src="/imagens/jpg/estojo.jpg" alt="Estojos">
+                    </div>
+                    <span>ESTOJOS</span>
+                </a>
+
+                <a class="category-item" href="produtos.html">
+                    <div class="category-thumb">
+                        <img src="/imagens/jpg/cadernos.jpg" alt="Cadernos">
+                    </div>
+                    <span>CADERNOS</span>
+                </a>
+
+                <a class="category-item" href="produtos.html">
+                    <div class="category-thumb">
+                        <img src="/imagens/jpg/canetas.jpg" alt="Canetas">
+                    </div>
+                    <span>CANETAS</span>
+                </a>
+
+                <a class="category-item" href="produtos.html">
+                    <div class="category-thumb">
+                        <img src="/imagens/jpg/necessaire.jpg" alt="Necessaires">
+                    </div>
+                    <span>NECESSAIRES</span>
+                </a>
+
+                <a class="category-item" href="produtos.html">
+                    <div class="category-thumb">
+                        <img src="/imagens/jpg/chaveiros.jpg" alt="Chaveiros">
+                    </div>
+                    <span>CHAVEIROS</span>
+                </a>
+
             </div>
         </section>
 
+        <!-- LANÇAMENTOS -->
         <section class="home-section container" id="lancamentos">
+
             <p class="eyebrow">Seleção da semana</p>
+
             <div class="section-head-row">
                 <h2 class="section-heading">Lançamentos</h2>
-                <a href="produtos.html" class="btn btn-outline">Comprar agora</a>
+
+                <a href="produtos.html" class="btn btn-outline">
+                    Comprar agora
+                </a>
             </div>
+
             <div class="products-grid">
-                <article class="product-card"><div class="product-image"><img src="/imagens/png/Mochila1.png" alt="Mochila Outline X"></div><div class="product-info"><h3 class="product-name">MOCHILA OUTLINE X</h3><span class="product-price">R$ 500,00</span><span class="product-installments">ou 2x de R$ 250,00</span></div></article>
-                <article class="product-card"><div class="product-image"><img src="/imagens/jpg/Mochila2.jpg" alt="Mochila Outline XXL"></div><div class="product-info"><h3 class="product-name">MOCHILA OUTLINE XXL</h3><span class="product-price">R$ 999,00</span><span class="product-installments">ou 4x de R$ 249,75</span></div></article>
-                <article class="product-card"><div class="product-image"><img src="/imagens/jpg/mochila3.jpg" alt="Mochila Outline Color"></div><div class="product-info"><h3 class="product-name">OUTLINE COLOR</h3><span class="product-price">R$ 99,90</span><span class="product-installments">ou 2x de R$ 49,95</span></div></article>
-                <article class="product-card"><div class="product-image"><img src="/imagens/jpg/lapis.jpg" alt="Kit de lápis de cor"></div><div class="product-info"><h3 class="product-name">KIT DE LÁPIS DE COR</h3><span class="product-price">R$ 50,00</span><span class="product-installments">ou 2x de R$ 25,00</span></div></article>
+
+                <article class="product-card">
+                    <div class="product-image">
+                        <img src="/imagens/png/Mochila1.png" alt="Mochila Outline X">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">MOCHILA OUTLINE X</h3>
+                        <span class="product-price">R$ 500,00</span>
+                        <span class="product-installments">ou 2x de R$ 250,00</span>
+                    </div>
+                </article>
+
+                <article class="product-card">
+                    <div class="product-image">
+                        <img src="/imagens/jpg/Mochila2.jpg" alt="Mochila Outline XXL">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">MOCHILA OUTLINE XXL</h3>
+                        <span class="product-price">R$ 999,00</span>
+                        <span class="product-installments">ou 4x de R$ 249,75</span>
+                    </div>
+                </article>
+
+                <article class="product-card">
+                    <div class="product-image">
+                        <img src="/imagens/jpg/mochila3.jpg" alt="Mochila Outline Color">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">OUTLINE COLOR</h3>
+                        <span class="product-price">R$ 99,90</span>
+                        <span class="product-installments">ou 2x de R$ 49,95</span>
+                    </div>
+                </article>
+
+                <article class="product-card">
+                    <div class="product-image">
+                        <img src="/imagens/jpg/lapis.jpg" alt="Kit de lápis de cor">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">KIT DE LÁPIS DE COR</h3>
+                        <span class="product-price">R$ 50,00</span>
+                        <span class="product-installments">ou 2x de R$ 25,00</span>
+                    </div>
+                </article>
+
             </div>
         </section>
 
+        <!-- BENEFÍCIOS -->
         <section class="home-section benefits" id="beneficios">
+
             <div class="container">
+
                 <p class="eyebrow">Por que Outline?</p>
-                <h2 class="section-heading">Pensada para acompanhar sua rotina.</h2>
+
+                <h2 class="section-heading">
+                    Pensada para acompanhar sua rotina.
+                </h2>
+
                 <div class="benefits-grid">
-                    <article class="benefit-card"><div class="benefit-icon"><img src="/imagens/png/qualidade.png" alt=""></div><h3>Qualidade</h3><p>Mochilas, bolsas e acessórios pensados para unir estilo e praticidade.</p></article>
-                    <article class="benefit-card"><div class="benefit-icon"><img src="/imagens/png/durabilidade.png" alt=""></div><h3>Durabilidade</h3><p>Produtos para fazer parte da sua rotina por muito mais tempo.</p></article>
-                    <article class="benefit-card"><div class="benefit-icon"><img src="/imagens/png/segurança.png" alt=""></div><h3>Compra segura</h3><p>Uma experiência simples, clara e confiável do produto ao carrinho.</p></article>
+
+                    <article class="benefit-card">
+                        <div class="benefit-icon">
+                            <img src="/imagens/png/qualidade.png" alt="">
+                        </div>
+                        <h3>Qualidade</h3>
+                        <p>
+                            Mochilas, bolsas e acessórios pensados para unir
+                            estilo e praticidade.
+                        </p>
+                    </article>
+
+                    <article class="benefit-card">
+                        <div class="benefit-icon">
+                            <img src="/imagens/png/durabilidade.png" alt="">
+                        </div>
+                        <h3>Durabilidade</h3>
+                        <p>
+                            Produtos para fazer parte da sua rotina por muito
+                            mais tempo.
+                        </p>
+                    </article>
+
+                    <article class="benefit-card">
+                        <div class="benefit-icon">
+                            <img src="/imagens/png/segurança.png" alt="">
+                        </div>
+                        <h3>Compra segura</h3>
+                        <p>
+                            Uma experiência simples, clara e confiável do
+                            produto ao carrinho.
+                        </p>
+                    </article>
+
                 </div>
             </div>
         </section>
+
     </main>
 
+    <!-- RODAPÉ -->
     <footer class="main-footer">
+
         <div class="footer-container">
-            <div class="footer-brand"><span class="Outline">Outline</span><p>Papelaria e acessórios para transformar o cotidiano em algo mais seu.</p></div>
-            <div class="footer-coluna"><h4>Institucional</h4><ul><li>Sobre a loja</li><li>Nossas lojas</li><li>Trabalhe conosco</li></ul></div>
-            <div class="footer-coluna"><h4>Ajuda</h4><ul><li>Fale conosco</li><li>Políticas de troca</li><li>Prazos de entrega</li></ul></div>
-            <div class="footer-coluna"><h4>Siga-nos</h4><ul><li>Instagram</li><li>Facebook</li><li>Pinterest</li></ul></div>
+
+            <div class="footer-brand">
+                <span class="Outline">Outline</span>
+                <p>
+                    Papelaria e acessórios para transformar o cotidiano
+                    em algo mais seu.
+                </p>
+            </div>
+
+            <div class="footer-coluna">
+                <h4>Institucional</h4>
+                <ul>
+                    <li>Sobre a loja</li>
+                    <li>Nossas lojas</li>
+                    <li>Trabalhe conosco</li>
+                </ul>
+            </div>
+
+            <div class="footer-coluna">
+                <h4>Ajuda</h4>
+                <ul>
+                    <li>Fale conosco</li>
+                    <li>Políticas de troca</li>
+                    <li>Prazos de entrega</li>
+                </ul>
+            </div>
+
+            <div class="footer-coluna">
+                <h4>Siga-nos</h4>
+                <ul>
+                    <li>Instagram</li>
+                    <li>Facebook</li>
+                    <li>Pinterest</li>
+                </ul>
+            </div>
+
         </div>
-        <div class="footer-bottom">© 2026 Outline. Todos os direitos reservados.</div>
+
+        <div class="footer-bottom">
+            © 2026 Outline. Todos os direitos reservados.
+        </div>
+
     </footer>
+
+    <!-- Script responsável pelo usuário -->
+    <script src="index.js"></script>
+
 </body>
 </html>
