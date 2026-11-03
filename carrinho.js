@@ -1,3 +1,4 @@
+
 const cartItems = document.getElementById("cart-items");
 const cartQuantity = document.getElementById("cart-quantity");
 const cartSubtotal = document.getElementById("cart-subtotal");
@@ -23,7 +24,6 @@ class Carrinho {
         }
 
         produto.quantidade++;
-
         this.salvar();
     }
 
@@ -39,7 +39,6 @@ class Carrinho {
 
     removerProduto(index) {
         this.itens.splice(index, 1);
-
         this.salvar();
     }
 
@@ -106,7 +105,6 @@ function atualizarCarrinho() {
         cartDiscount.textContent = formatarMoeda(0);
         cartTotal.textContent = formatarMoeda(0);
         cartCount.textContent = "0";
-
         return;
     }
 

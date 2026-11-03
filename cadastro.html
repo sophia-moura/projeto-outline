@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | Outline</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .auth-page {
+            min-height: 75vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 460px;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 38px;
+            box-shadow: var(--shadow);
+        }
+
+        .auth-card h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 36px;
+            margin: 0 0 8px;
+            color: var(--brown-dark);
+        }
+
+        .auth-description {
+            color: var(--brown-soft);
+            margin-bottom: 28px;
+        }
+
+        .auth-field {
+            margin-bottom: 18px;
+        }
+
+        .auth-field label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .auth-field input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--cream);
+            outline: none;
+        }
+
+        .auth-field input:focus {
+            border-color: var(--mustard);
+        }
+
+        .auth-button {
+            width: 100%;
+            margin-top: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .auth-message {
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .auth-link {
+            margin-top: 22px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--brown-soft);
+        }
+
+        .auth-link a {
+            color: var(--orange);
+            font-weight: 700;
+        }
+
+        @media (max-width: 500px) {
+            .auth-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="announcement">
+        Bem-vindo à Outline
+    </div>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="index.html" class="logo-box">
+                <img src="imagens/png/logo.png" alt="Outline" class="logo">
+            </a>
+
+            <div class="main-nav">
+                <a href="index.html">Início</a>
+                <a href="produtos.html">Produtos</a>
+            </div>
+
+            <div class="actions">
+                <a href="carrinho.html" class="icon-btn cart-btn">
+                    <img src="imagens/png/carrinho.png" alt="Carrinho" class="cart-icon">
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+
+        <section class="auth-card">
+
+            <p class="eyebrow">Faça parte da Outline</p>
+
+            <h1>Criar conta</h1>
+
+            <p class="auth-description">
+                Cadastre-se para aproveitar sua experiência na nossa loja.
+            </p>
+
+            <form id="cadastro-form">
+
+                <div class="auth-field">
+                    <label for="nome">Nome completo</label>
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Digite seu nome"
+                        required
+                    >
+                </div>
+
+                <div class="auth-field">
+                    <label for="email">E-mail</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        required
+                    >
+                </div>
+
+                <div class="auth-field">
+                    <label for="senha">Senha</label>
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Mínimo de 6 caracteres"
+                        minlength="6"
+                        required
+                    >
+                </div>
+
+                <div class="auth-field">
+                    <label for="confirmar-senha">Confirmar senha</label>
+                    <input
+                        type="password"
+                        id="confirmar-senha"
+                        name="confirmar-senha"
+                        placeholder="Digite a senha novamente"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary auth-button">
+                    Criar minha conta
+                </button>
+
+                <p id="mensagem" class="auth-message" role="status"></p>
+
+            </form>
+
+            <p class="auth-link">
+                Já possui uma conta?
+                <a href="login.html">Faça login</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="cadastro.js"></script>
+
+</body>
+</html>
