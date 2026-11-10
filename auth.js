@@ -1,7 +1,5 @@
-// Sessão do usuário no front-end.
-// ATENÇÃO: é um stub. Enquanto não houver backend, "estar logado" é apenas
-// um registro no localStorage. Quando a API existir, login.html e cadastro.html
-// devem chamar o backend e só então chamar Auth.entrar(...).
+// Sessão do usuário
+// "estar logado" é apenas um registro no localStorage
 const Auth = {
     CHAVE: "usuarioLogado",
     PAGINAS_RETORNO_PERMITIDAS: ["carrinho.html", "produtos.html", "index.html"],
@@ -27,8 +25,7 @@ const Auth = {
         localStorage.removeItem(this.CHAVE);
     },
 
-    // Lê ?retorno=carrinho.html da URL. Só aceita páginas da lista acima,
-    // para ninguém forjar um link que redirecione para outro site.
+    // Lê ?retorno=carrinho.html da URL. Só aceita páginas da lista acima
     paginaRetorno() {
         const retorno = new URLSearchParams(window.location.search).get("retorno");
         return this.PAGINAS_RETORNO_PERMITIDAS.includes(retorno) ? retorno : "index.html";
@@ -55,7 +52,6 @@ function renderizarConta() {
 }
 
 // Mantém o contador do carrinho do cabeçalho correto em qualquer página
-// (inclusive a home, que não tem script de carrinho).
 function sincronizarContadorHeader() {
     const contador = document.getElementById("cart-count");
 
