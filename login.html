@@ -55,8 +55,7 @@
         const sufixo = retorno ? "?retorno=" + encodeURIComponent(retorno) : "";
         document.querySelectorAll("[data-troca]").forEach(link => { link.href = link.dataset.troca + sufixo; });
 
-        // TODO (backend): validar e-mail e senha na API. Hoje é um stub:
-        // aceita qualquer credencial bem formada e abre uma sessão local.
+        // aceita qualquer credencial bem formada e abre uma sessão local
         formulario.addEventListener("submit", evento => {
             evento.preventDefault();
             const email = document.getElementById("email").value.trim();
