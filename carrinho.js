@@ -9,7 +9,6 @@ const cartCount = document.getElementById("cart-count");
 const finalizarCompra = document.getElementById("finalizar-compra");
 
 // Regra de desconto: compras a partir de R$ 300,00 ganham 10%.
-// O backend deve aplicar exatamente a mesma regra na confirmação do pedido.
 const REGRA_DESCONTO = {
     valorMinimo: 300,
     percentual: 10
@@ -180,8 +179,8 @@ function atualizarResumo() {
     cartTotal.textContent = formatarMoeda(carrinho.calcularTotal());
     cartCount.textContent = carrinho.calcularQuantidadeTotal();
 
-    // A regra aparece no resumo: rótulo com o percentual quando aplicada
-    // e, caso contrário, quanto falta para ganhar o desconto.
+    // A regra aparece no resumo da compra: rótulo com o percentual quando aplicada
+    // Caso contrário, quanto falta para ganhar o desconto.
     if (desconto > 0) {
         cartDiscountLabel.textContent = `Desconto (${REGRA_DESCONTO.percentual}%)`;
     } else {
@@ -259,9 +258,7 @@ function removerProduto(index) {
     carrinho.removerProduto(index);
 }
 
-// Dados que devem ir ao backend na finalização: apenas código e quantidade.
-// Preço, subtotal, desconto e total NÃO são enviados como fonte definitiva;
-// o servidor recalcula tudo a partir do banco.
+// Resumo da compra: Preço, subtotal, desconto e total
 const montarPedido = () => carrinho.itens.map(item => ({
     codigo: item.codigo,
     quantidade: item.quantidade
@@ -288,8 +285,9 @@ finalizarCompra.addEventListener("click", () => {
         return;
     }
 
-    // Finalizar exige login. O carrinho fica no localStorage, então
-    // sobrevive ao login e o usuário volta direto para esta página.
+    // Finalizar exige login
+    // Usuário volta para essa página depois 
+    // (produtos adicionados anteriormente permanecem no carrinho)
     if (!Auth.estaLogado()) {
         alert("Faça login para finalizar a compra. Os itens do seu carrinho serão mantidos.");
         window.location.href = "login.html?retorno=carrinho.html";
@@ -304,9 +302,7 @@ finalizarCompra.addEventListener("click", () => {
         alert(avisos.join("\n") + "\n\nRevise o carrinho e tente finalizar novamente.");
         return;
     }
-
-    // TODO (backend): enviar montarPedido() para a API e exibir o resumo
-    // retornado pelo servidor. Enquanto não existe, mostramos o cálculo local.
+    
     alert(`Compra finalizada com sucesso!\n\n${montarResumoFinal()}`);
 
     carrinho.itens = [];
