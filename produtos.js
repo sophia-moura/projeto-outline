@@ -105,7 +105,11 @@ function mostrarMensagemSemResultado(textoDigitado) {
     const mensagem = document.createElement("p");
     mensagem.classList.add("no-products");
 
-    if (textoDigitado !== "") {
+    const nomeCategoria = nomesCategoria[categoriaAtual];
+
+    if (textoDigitado !== "" && nomeCategoria) {
+        mensagem.textContent = `Nenhum produto encontrado para "${textoDigitado}" em ${nomeCategoria}. Tente outro nome ou veja todos os produtos.`;
+    } else if (textoDigitado !== "") {
         mensagem.textContent = `Nenhum produto encontrado para "${textoDigitado}". Tente buscar por outro nome.`;
     } else {
         mensagem.textContent = "Nenhum produto disponível nesta categoria.";
@@ -191,21 +195,43 @@ function aplicarFiltros() {
     mostrarProdutos(produtosFiltrados, textoDigitado);
 }
 
+function selecionarCategoria(categoria) {
+    categoriaAtual = categoria;
+
+    botoesCategoria.forEach(botao => {
+        const ativo = botao.dataset.category === categoria;
+
+        botao.classList.toggle("active", ativo);
+        botao.setAttribute("aria-pressed", ativo);
+    });
+}
+
+function lerParametrosDaUrl() {
+    const parametros = new URLSearchParams(window.location.search);
+    const categoria = parametros.get("categoria");
+    const busca = parametros.get("busca");
+
+    const categoriaValida = Array.from(botoesCategoria).some(
+        botao => botao.dataset.category === categoria
+    );
+
+    selecionarCategoria(categoriaValida ? categoria : "todos");
+
+    if (busca) {
+        campoPesquisa.value = busca;
+    }
+}
+
 botoesCategoria.forEach(botao => {
     botao.addEventListener("click", () => {
-        categoriaAtual = botao.dataset.category;
-
-        botoesCategoria.forEach(b => {
-            b.classList.remove("active");
-        });
-
-        botao.classList.add("active");
-
+        selecionarCategoria(botao.dataset.category);
         aplicarFiltros();
     });
 });
 
 botaoPesquisa.addEventListener("click", aplicarFiltros);
+
+campoPesquisa.addEventListener("input", aplicarFiltros);
 
 campoPesquisa.addEventListener("keydown", evento => {
     if (evento.key === "Enter") {
@@ -213,6 +239,7 @@ campoPesquisa.addEventListener("keydown", evento => {
     }
 });
 
-mostrarProdutos(produtos);
+lerParametrosDaUrl();
+aplicarFiltros();
 
 atualizarContadorCarrinho();
