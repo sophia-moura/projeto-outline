@@ -326,6 +326,28 @@ button { cursor: pointer; }
 #finalizar-compra:hover { background: var(--mustard); }
 .empty-cart { margin: 0; padding: 60px; border: 1px dashed var(--line); border-radius: var(--radius); text-align: center; color: var(--brown-soft); background: rgba(255,255,255,.35); }
 
+/* ===== CONTA (login / cadastro / cabeçalho) ===== */
+.account-area { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+.account-area a { text-decoration: none; font-weight: 600; }
+.account-area a:hover { color: var(--orange); }
+#guest-actions, #user-actions { display: flex; align-items: center; gap: 12px; }
+#user-actions[hidden], #guest-actions[hidden] { display: none; }
+#logout-button { border: 1px solid var(--line); border-radius: 999px; background: var(--white); padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer; }
+#logout-button:hover { border-color: var(--mustard); }
+ 
+.auth-container { padding: 78px 0 90px; max-width: 520px; }
+.auth-form { display: flex; flex-direction: column; gap: 8px; margin-top: 26px; padding: 30px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.auth-form label { font-size: 13px; font-weight: 700; margin-top: 8px; }
+.auth-form input { height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; font: inherit; background: var(--cream); }
+.auth-form input:focus { outline: 2px solid var(--mustard); border-color: transparent; }
+.auth-form .btn { margin-top: 18px; border: 0; cursor: pointer; }
+.auth-error { margin: 8px 0 0; color: #b3261e; font-size: 13px; font-weight: 600; }
+.auth-switch { margin: 14px 0 0; font-size: 13px; color: var(--brown-soft); }
+.auth-switch a { color: var(--orange); font-weight: 700; }
+ 
+.cart-summary p.cart-hint { display: block; margin: -4px 0 14px; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.1); font-size: 12px; line-height: 1.4; }
+.cart-summary p.cart-hint[hidden] { display: none; }
+
 /* ===== FOOTER ===== */
 .main-footer { background: #e8dac8; color: var(--brown); padding-top: 68px; }
 .footer-container { width: min(var(--container), calc(100% - 48px)); margin: auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 50px; }
