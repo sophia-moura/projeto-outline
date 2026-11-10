@@ -1,7 +1,4 @@
-// Catálogo compartilhado por produtos.html e carrinho.html.
-// Fonte única de nome, preço, imagem e estoque no front-end.
-// (O backend continua sendo a fonte definitiva na finalização.)
-
+// Catálogo compartilhado por produtos.html e carrinho.html
 class Produto {
     constructor(codigo, nome, categoria, preco, estoque, imagem) {
         this.codigo = codigo;
