@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="imagens/png/logoheader.png">
+    <title>Outline | Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="announcement">Frete especial em compras selecionadas · novidades Outline</div>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="index.html" class="logo-box" aria-label="Outline — início">
+                <img src="imagens/png/logo.png" alt="" class="logo">
+            </a>
+            <div class="main-nav"><a href="produtos.html">Produtos</a><a href="index.html#lancamentos">Lançamentos</a><a href="index.html#beneficios">Sobre a Outline</a></div>
+            <div class="actions"><a href="produtos.html" class="icon-btn" aria-label="Buscar">⌕</a><div class="account-area" id="account-area"><div id="guest-actions"><a href="cadastro.html">Cadastrar</a><a href="login.html">Entrar</a></div><div id="user-actions" hidden><span id="user-name"></span><button type="button" id="logout-button">Sair</button></div></div><a href="carrinho.html" class="icon-btn cart-btn" aria-label="Carrinho"><img src="imagens/png/carrinho.png" alt="" class="cart-icon"><span id="cart-count">0</span></a></div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="auth-container container">
+            <p class="eyebrow">Sua conta</p>
+            <h1 class="section-heading">Cadastrar</h1>
+            <p class="section-copy">Crie sua conta. Os itens do seu carrinho serão mantidos.</p>
+            <form class="auth-form" id="auth-form" novalidate>
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" autocomplete="name">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" autocomplete="email">
+                <label for="senha">Senha (mín. 6 caracteres)</label>
+                <input type="password" id="senha" name="senha" autocomplete="new-password">
+                <label for="confirmar">Confirmar senha</label>
+                <input type="password" id="confirmar" name="confirmar" autocomplete="new-password">
+                <p class="auth-error" id="auth-error" role="alert" hidden></p>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <p class="auth-switch">Já tem conta? <a href="login.html" data-troca="login.html">Entrar</a></p>
+            </form>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand"><span class="Outline">Outline</span><p>Papelaria e acessórios para transformar o cotidiano em algo mais seu.</p></div>
+            <div class="footer-coluna"><h4>Institucional</h4><ul><li>Sobre a loja</li><li>Nossas lojas</li><li>Trabalhe conosco</li></ul></div>
+            <div class="footer-coluna"><h4>Ajuda</h4><ul><li>Fale conosco</li><li>Políticas de troca</li><li>Prazos de entrega</li></ul></div>
+            <div class="footer-coluna"><h4>Siga-nos</h4><ul><li>Instagram</li><li>Facebook</li><li>Pinterest</li></ul></div>
+        </div>
+        <div class="footer-bottom">© 2026 Outline. Todos os direitos reservados.</div>
+    </footer>
+    <script src="auth.js"></script>
+    <script>
+        const formulario = document.getElementById("auth-form");
+        const erro = document.getElementById("auth-error");
+        const mostrarErro = texto => { erro.textContent = texto; erro.hidden = false; };
+        const emailValido = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const retorno = new URLSearchParams(window.location.search).get("retorno");
+        const sufixo = retorno ? "?retorno=" + encodeURIComponent(retorno) : "";
+        document.querySelectorAll("[data-troca]").forEach(link => { link.href = link.dataset.troca + sufixo; });
+
+        // TODO (backend): enviar os dados para a API de cadastro.
+        // Hoje é um stub: abre uma sessão local e não grava a senha.
+        formulario.addEventListener("submit", evento => {
+            evento.preventDefault();
+            const nome = document.getElementById("nome").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const senha = document.getElementById("senha").value;
+            const confirmar = document.getElementById("confirmar").value;
+
+            if (nome === "") { mostrarErro("Informe seu nome."); return; }
+            if (!emailValido(email)) { mostrarErro("Informe um e-mail válido."); return; }
+            if (senha.length < 6) { mostrarErro("A senha deve ter pelo menos 6 caracteres."); return; }
+            if (senha !== confirmar) { mostrarErro("As senhas não coincidem."); return; }
+
+            Auth.entrar({ nome: nome, email: email });
+            window.location.href = Auth.paginaRetorno();
+        });
+    </script>
+</body>
+</html>
