@@ -59,8 +59,6 @@
         const sufixo = retorno ? "?retorno=" + encodeURIComponent(retorno) : "";
         document.querySelectorAll("[data-troca]").forEach(link => { link.href = link.dataset.troca + sufixo; });
 
-        // TODO (backend): enviar os dados para a API de cadastro.
-        // Hoje é um stub: abre uma sessão local e não grava a senha.
         formulario.addEventListener("submit", evento => {
             evento.preventDefault();
             const nome = document.getElementById("nome").value.trim();
