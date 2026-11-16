@@ -1,3 +1,4 @@
+
 const cartItems = document.getElementById("cart-items");
 const cartQuantity = document.getElementById("cart-quantity");
 const cartSubtotal = document.getElementById("cart-subtotal");
@@ -8,17 +9,19 @@ const cartTotal = document.getElementById("cart-total");
 const cartCount = document.getElementById("cart-count");
 const finalizarCompra = document.getElementById("finalizar-compra");
 
-// Regra de desconto: compras a partir de R$ 300,00 ganham 10%.
 const REGRA_DESCONTO = {
     valorMinimo: 300,
     percentual: 10
 };
 
-const arredondar = valor => Math.round((valor + Number.EPSILON) * 100) / 100;
+const arredondar = valor =>
+    Math.round((valor + Number.EPSILON) * 100) / 100;
 
-const formatarMoeda = valor => `R$ ${valor.toFixed(2).replace(".", ",")}`;
+const formatarMoeda = valor =>
+    `R$ ${Number(valor || 0).toFixed(2).replace(".", ",")}`;
 
-const buscarNoCatalogo = codigo => produtos.find(produto => produto.codigo === codigo);
+const buscarNoCatalogo = codigo =>
+    produtos.find(produto => produto.codigo === codigo);
 
 class Carrinho {
     constructor() {
@@ -34,8 +37,6 @@ class Carrinho {
         }
     }
 
-    // Reconstrói cada item a partir do catálogo (nome, preço, imagem, estoque)
-    // e ajusta a quantidade ao estoque atual. Retorna os avisos para o usuário.
     sincronizarComCatalogo() {
         const avisos = [];
         const sincronizados = [];
@@ -44,19 +45,22 @@ class Carrinho {
             const produto = buscarNoCatalogo(item.codigo);
 
             if (!produto || !produto.disponivel()) {
-                avisos.push(`"${item.nome || item.codigo}" não está mais disponível e foi removido do carrinho.`);
+                avisos.push(
+                    `"${item.nome || item.codigo}" não está mais disponível e foi removido do carrinho.`
+                );
                 return;
             }
 
-            let quantidade = Number.isInteger(item.quantidade) && item.quantidade > 0
-                ? item.quantidade
-                : 1;
+            let quantidade =
+                Number.isInteger(item.quantidade) && item.quantidade > 0
+                    ? item.quantidade
+                    : 1;
 
             if (quantidade > produto.estoque) {
                 avisos.push(
-                    `A quantidade de "${produto.nome}" foi ajustada para ${produto.estoque} ` +
-                    `(estoque disponível).`
+                    `A quantidade de "${produto.nome}" foi ajustada para ${produto.estoque} (estoque disponível).`
                 );
+
                 quantidade = produto.estoque;
             }
 
@@ -77,23 +81,30 @@ class Carrinho {
 
     aumentarQuantidade(index) {
         const item = this.itens[index];
+
+        if (!item) {
+            return;
+        }
+
         const produto = buscarNoCatalogo(item.codigo);
         const estoque = produto ? produto.estoque : item.estoque;
 
         if (item.quantidade >= estoque) {
             alert(
-                `Não é possível adicionar mais unidades. ` +
-                `Estoque disponível: ${estoque}.`
+                `Não é possível adicionar mais unidades. Estoque disponível: ${estoque}.`
             );
             return;
         }
 
         item.quantidade++;
-
         this.salvar();
     }
 
     diminuirQuantidade(index) {
+        if (!this.itens[index]) {
+            return;
+        }
+
         if (this.itens[index].quantidade > 1) {
             this.itens[index].quantidade--;
         } else {
@@ -105,26 +116,21 @@ class Carrinho {
 
     removerProduto(index) {
         this.itens.splice(index, 1);
-
         this.salvar();
     }
 
     calcularQuantidadeTotal() {
-        let quantidadeTotal = 0;
-
-        for (let i = 0; i < this.itens.length; i++) {
-            quantidadeTotal += this.itens[i].quantidade;
-        }
-
-        return quantidadeTotal;
+        return this.itens.reduce(
+            (total, item) => total + item.quantidade,
+            0
+        );
     }
 
     calcularSubtotal() {
-        let subtotal = 0;
-
-        for (let i = 0; i < this.itens.length; i++) {
-            subtotal += this.itens[i].preco * this.itens[i].quantidade;
-        }
+        const subtotal = this.itens.reduce(
+            (total, item) => total + item.preco * item.quantidade,
+            0
+        );
 
         return arredondar(subtotal);
     }
@@ -133,28 +139,35 @@ class Carrinho {
         const subtotal = this.calcularSubtotal();
 
         if (subtotal >= REGRA_DESCONTO.valorMinimo) {
-            return arredondar(subtotal * REGRA_DESCONTO.percentual / 100);
+            return arredondar(
+                subtotal * REGRA_DESCONTO.percentual / 100
+            );
         }
 
         return 0;
     }
 
     calcularTotal() {
-        return arredondar(this.calcularSubtotal() - this.calcularDesconto());
+        return arredondar(
+            this.calcularSubtotal() - this.calcularDesconto()
+        );
     }
 
-    // Quanto falta para atingir o desconto (0 se já atingiu ou carrinho vazio).
     calcularFaltaParaDesconto() {
         const subtotal = this.calcularSubtotal();
 
-        if (this.itens.length === 0 || subtotal >= REGRA_DESCONTO.valorMinimo) {
+        if (
+            this.itens.length === 0 ||
+            subtotal >= REGRA_DESCONTO.valorMinimo
+        ) {
             return 0;
         }
 
-        return arredondar(REGRA_DESCONTO.valorMinimo - subtotal);
+        return arredondar(
+            REGRA_DESCONTO.valorMinimo - subtotal
+        );
     }
 
-    // Só código e quantidade são gravados. Preço, nome e estoque vêm do catálogo.
     salvar() {
         const enxuto = this.itens.map(item => ({
             codigo: item.codigo,
@@ -179,10 +192,9 @@ function atualizarResumo() {
     cartTotal.textContent = formatarMoeda(carrinho.calcularTotal());
     cartCount.textContent = carrinho.calcularQuantidadeTotal();
 
-    // A regra aparece no resumo da compra: rótulo com o percentual quando aplicada
-    // Caso contrário, quanto falta para ganhar o desconto.
     if (desconto > 0) {
-        cartDiscountLabel.textContent = `Desconto (${REGRA_DESCONTO.percentual}%)`;
+        cartDiscountLabel.textContent =
+            `Desconto (${REGRA_DESCONTO.percentual}%)`;
     } else {
         cartDiscountLabel.textContent = "Desconto";
     }
@@ -191,6 +203,7 @@ function atualizarResumo() {
         cartDiscountHint.textContent =
             `Faltam ${formatarMoeda(falta)} para ganhar ${REGRA_DESCONTO.percentual}% de desconto ` +
             `(compras a partir de ${formatarMoeda(REGRA_DESCONTO.valorMinimo)}).`;
+
         cartDiscountHint.hidden = false;
     } else {
         cartDiscountHint.hidden = true;
@@ -208,7 +221,6 @@ function atualizarCarrinho() {
         `;
 
         atualizarResumo();
-
         return;
     }
 
@@ -258,62 +270,158 @@ function removerProduto(index) {
     carrinho.removerProduto(index);
 }
 
-// Resumo da compra: Preço, subtotal, desconto e total
-const montarPedido = () => carrinho.itens.map(item => ({
-    codigo: item.codigo,
-    quantidade: item.quantidade
-}));
+const montarPedido = () =>
+    carrinho.itens.map(item => ({
+        codigo: item.codigo,
+        quantidade: item.quantidade
+    }));
 
-const montarResumoFinal = () => {
-    let linhas = "Itens comprados:\n";
+function montarResumoFinal(pedido) {
+    let resumo = `Pedido #${pedido.id} realizado com sucesso!\n\n`;
 
-    carrinho.itens.forEach(produto => {
-        linhas += `- ${produto.nome} (x${produto.quantidade}): ${formatarMoeda(produto.preco * produto.quantidade)}\n`;
+    resumo += "Itens comprados:\n";
+
+    pedido.itens.forEach(item => {
+        resumo +=
+            `- ${item.nome} (x${item.quantidade}): ` +
+            `${formatarMoeda(item.subtotal)}\n`;
     });
 
-    linhas += `\nQuantidade de itens: ${carrinho.calcularQuantidadeTotal()}`;
-    linhas += `\nSubtotal: ${formatarMoeda(carrinho.calcularSubtotal())}`;
-    linhas += `\nDesconto: ${formatarMoeda(carrinho.calcularDesconto())}`;
-    linhas += `\nValor final: ${formatarMoeda(carrinho.calcularTotal())}`;
+    resumo += `\nSubtotal: ${formatarMoeda(pedido.subtotal)}`;
+    resumo += `\nDesconto: ${formatarMoeda(pedido.desconto)}`;
+    resumo += `\nValor final: ${formatarMoeda(pedido.valor_final)}`;
 
-    return linhas;
-};
+    return resumo;
+}
 
-finalizarCompra.addEventListener("click", () => {
+async function finalizarPedido() {
     if (carrinho.itens.length === 0) {
         alert("Seu carrinho está vazio.");
         return;
     }
 
-    // Finalizar exige login
-    // Usuário volta para essa página depois 
-    // (produtos adicionados anteriormente permanecem no carrinho)
     if (!Auth.estaLogado()) {
-        alert("Faça login para finalizar a compra. Os itens do seu carrinho serão mantidos.");
+        alert(
+            "Faça login para finalizar a compra. Os itens do seu carrinho serão mantidos."
+        );
+
         window.location.href = "login.html?retorno=carrinho.html";
         return;
     }
 
-    // Revalida o estoque no momento da finalização.
-    const avisos = carrinho.sincronizarComCatalogo();
+    const token = Auth.token();
 
-    if (avisos.length > 0) {
-        carrinho.salvar();
-        alert(avisos.join("\n") + "\n\nRevise o carrinho e tente finalizar novamente.");
+    if (!token) {
+        alert("Sua sessão não foi encontrada. Faça login novamente.");
+        window.location.href = "login.html?retorno=carrinho.html";
         return;
     }
-    
-    alert(`Compra finalizada com sucesso!\n\n${montarResumoFinal()}`);
 
-    carrinho.itens = [];
-    carrinho.salvar();
-});
+    finalizarCompra.disabled = true;
+    finalizarCompra.textContent = "Finalizando compra...";
 
-// Ao abrir a página: alinha o carrinho ao catálogo e avisa sobre ajustes.
-const avisosIniciais = carrinho.sincronizarComCatalogo();
+    try {
+        const resposta = await fetch("/api/pedidos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                itens: montarPedido()
+            })
+        });
 
-carrinho.salvar();
+        const dados = await resposta.json();
 
-if (avisosIniciais.length > 0) {
-    alert(avisosIniciais.join("\n"));
+        if (resposta.status === 401) {
+            alert(
+                "Sua sessão expirou. Faça login novamente para continuar. Seu carrinho será mantido."
+            );
+
+            await Auth.sair();
+
+            window.location.href = "login.html?retorno=carrinho.html";
+            return;
+        }
+
+        if (!resposta.ok) {
+            let mensagem = dados.erro || "Não foi possível finalizar a compra.";
+
+            if (Array.isArray(dados.detalhes) && dados.detalhes.length > 0) {
+                mensagem += "\n\n";
+
+                dados.detalhes.forEach(item => {
+                    mensagem +=
+                        `${item.nome || item.codigo}: ${item.motivo}\n`;
+
+                    if (item.disponivel !== undefined) {
+                        mensagem +=
+                            `Quantidade disponível: ${item.disponivel}\n`;
+                    }
+                });
+            }
+
+            alert(
+                `${mensagem}\n\nSeus produtos continuam no carrinho. Revise os itens e tente novamente.`
+            );
+
+            return;
+        }
+
+        if (!dados.pedido || !dados.pedido.id) {
+            throw new Error("A API não retornou os dados do pedido.");
+        }
+
+        carrinho.itens = [];
+        carrinho.salvar();
+
+        alert(montarResumoFinal(dados.pedido));
+
+    } catch (erro) {
+        console.error("Erro ao finalizar a compra:", erro);
+
+        alert(
+            "Não foi possível concluir a compra. Verifique sua conexão e tente novamente. Seus produtos continuam no carrinho."
+        );
+
+    } finally {
+        finalizarCompra.disabled = false;
+        finalizarCompra.textContent = "Finalizar compra";
+    }
 }
+
+finalizarCompra.addEventListener("click", finalizarPedido);
+
+async function inicializarCarrinho() {
+    cartItems.innerHTML = "<p>Carregando carrinho...</p>";
+    finalizarCompra.disabled = true;
+
+    try {
+        await carregarCatalogo();
+
+        const avisos = carrinho.sincronizarComCatalogo();
+
+        carrinho.salvar();
+
+        if (avisos.length > 0) {
+            alert(avisos.join("\n"));
+        }
+
+    } catch (erro) {
+        console.error("Erro ao carregar os produtos do carrinho:", erro);
+
+        cartItems.innerHTML = `
+            <p class="empty-cart">
+                Não foi possível carregar os produtos. Verifique sua conexão e tente novamente.
+            </p>
+        `;
+
+        atualizarResumo();
+        return;
+    }
+
+    finalizarCompra.disabled = false;
+}
+
+inicializarCarrinho();
