@@ -1,34 +1,105 @@
-// Sessão do usuário
-// "estar logado" é apenas um registro no localStorage
 const Auth = {
     CHAVE: "usuarioLogado",
     PAGINAS_RETORNO_PERMITIDAS: ["carrinho.html", "produtos.html", "index.html"],
 
     usuario() {
         try {
-            return JSON.parse(localStorage.getItem(this.CHAVE));
+            const sessao = JSON.parse(localStorage.getItem(this.CHAVE));
+            return sessao?.usuario || null;
+        } catch (erro) {
+            return null;
+        }
+    },
+
+    token() {
+        try {
+            const sessao = JSON.parse(localStorage.getItem(this.CHAVE));
+            return sessao?.token || null;
         } catch (erro) {
             return null;
         }
     },
 
     estaLogado() {
-        return this.usuario() !== null;
+        return this.usuario() !== null && this.token() !== null;
     },
 
-    entrar(usuario) {
-        localStorage.setItem(this.CHAVE, JSON.stringify(usuario));
+    entrar(usuario, token) {
+        if (!usuario || !token) {
+            return false;
+        }
+
+        localStorage.setItem(this.CHAVE, JSON.stringify({
+            usuario: usuario,
+            token: token
+        }));
+
+        return true;
     },
 
-    sair() {
-        // Remove só a sessão: a chave "carrinho" permanece intacta.
+    async validarSessao() {
+        const token = this.token();
+
+        if (!token) {
+            renderizarConta();
+            return;
+        }
+
+        try {
+            const resposta = await fetch("/api/auth/me", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (resposta.status === 401) {
+                this.sair();
+                return;
+            }
+
+            if (!resposta.ok) {
+                renderizarConta();
+                return;
+            }
+
+            const dados = await resposta.json();
+
+            this.entrar(dados.usuario, token);
+
+        } catch (erro) {
+            console.error("Não foi possível verificar a sessão:", erro);
+        }
+
+        renderizarConta();
+    },
+
+    async sair() {
+        const token = this.token();
+
+        if (token) {
+            try {
+                await fetch("/api/auth/logout", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+            } catch (erro) {
+                console.error("Não foi possível encerrar a sessão no servidor:", erro);
+            }
+        }
+
         localStorage.removeItem(this.CHAVE);
+
+        renderizarConta();
     },
 
-    // Lê ?retorno=carrinho.html da URL. Só aceita páginas da lista acima
     paginaRetorno() {
         const retorno = new URLSearchParams(window.location.search).get("retorno");
-        return this.PAGINAS_RETORNO_PERMITIDAS.includes(retorno) ? retorno : "index.html";
+
+        return this.PAGINAS_RETORNO_PERMITIDAS.includes(retorno)
+            ? retorno
+            : "index.html";
     }
 };
 
@@ -42,16 +113,16 @@ function renderizarConta() {
     }
 
     const usuario = Auth.usuario();
+    const estaAutenticado = Auth.estaLogado();
 
-    visitante.hidden = usuario !== null;
-    logado.hidden = usuario === null;
+    visitante.hidden = estaAutenticado;
+    logado.hidden = !estaAutenticado;
 
-    if (usuario) {
+    if (estaAutenticado && nome) {
         nome.textContent = `Olá, ${usuario.nome}`;
     }
 }
 
-// Mantém o contador do carrinho do cabeçalho correto em qualquer página
 function sincronizarContadorHeader() {
     const contador = document.getElementById("cart-count");
 
@@ -67,17 +138,20 @@ function sincronizarContadorHeader() {
         itens = [];
     }
 
-    contador.textContent = itens.reduce((total, item) => total + (item.quantidade || 0), 0);
+    contador.textContent = itens.reduce(
+        (total, item) => total + (item.quantidade || 0),
+        0
+    );
 }
 
 const botaoSair = document.getElementById("logout-button");
 
 if (botaoSair) {
-    botaoSair.addEventListener("click", () => {
-        Auth.sair();
-        renderizarConta();
+    botaoSair.addEventListener("click", async () => {
+        await Auth.sair();
     });
 }
 
 renderizarConta();
 sincronizarContadorHeader();
+Auth.validarSessao();
