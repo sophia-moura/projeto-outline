@@ -1,12 +1,13 @@
-// Catálogo compartilhado por produtos.html e carrinho.html
 class Produto {
-    constructor(codigo, nome, categoria, preco, estoque, imagem) {
-        this.codigo = codigo;
-        this.nome = nome;
-        this.categoria = categoria;
-        this.preco = preco;
-        this.estoque = estoque;
-        this.imagem = imagem;
+    constructor(dados) {
+        this.codigo = dados.codigo;
+        this.nome = dados.nome;
+        this.categoria = dados.categoria;
+        this.categoriaNome = dados.categoria_nome;
+        this.preco = Number(dados.preco);
+        this.estoque = Number(dados.estoque);
+        this.imagem = dados.imagem;
+        this.ativo = Boolean(dados.ativo);
     }
 
     disponivel() {
@@ -18,25 +19,49 @@ class Produto {
     }
 }
 
-const nomesCategoria = {
-    mochilas: "Mochilas",
-    cadernos: "Cadernos",
-    canetas: "Canetas",
-    chaveiros: "Chaveiros",
-    estojos: "Estojos",
-    lapis: "Lápis",
-    necessaires: "Necessaires"
-};
+let produtos = [];
+let categorias = [];
+let nomesCategoria = {};
 
-const produtos = [
-    new Produto("OUT-001", "Mochila Vinho", "mochilas", 500.00, 10, "imagens/jpg/mochilavinho.jpg"),
-    new Produto("OUT-002", "Caderno Azul", "cadernos", 39.90, 15, "imagens/jpg/cadernoazul.jpg"),
-    new Produto("OUT-003", "Kit de Canetas Coloridas", "canetas", 29.90, 20, "imagens/jpg/kitcanetas.jpg"),
-    new Produto("OUT-004", "Chaveiros", "chaveiros", 19.90, 25, "imagens/png/chaveiros.png"),
-    new Produto("OUT-005", "Estojo Preto", "estojos", 59.90, 10, "imagens/jpg/estojopreto.jpg"),
-    new Produto("OUT-006", "Kit de Lápis de Cor", "lapis", 50.00, 50, "imagens/jpg/kitlapis.jpg"),
-    new Produto("OUT-007", "Mochila Azul", "mochilas", 349.90, 0, "imagens/jpg/mochilaazul.jpg"),
-    new Produto("OUT-008", "Necessaire Rosa", "necessaires", 69.90, 20, "imagens/jpg/necessarierosa.jpg"),
-    new Produto("OUT-009", "Kit de Necessaires", "necessaires", 89.90, 10, "imagens/jpg/kitnecessaries.jpg"),
-    new Produto("OUT-010", "Mochila Preta", "mochilas", 399.90, 10, "imagens/jpg/mochilapreta.jpg")
-];
+let catalogoCarregando = null;
+
+async function carregarCatalogo() {
+    if (catalogoCarregando) {
+        return catalogoCarregando;
+    }
+
+    catalogoCarregando = (async () => {
+        try {
+            const [respostaCategorias, respostaProdutos] = await Promise.all([
+                fetch("/api/categorias"),
+                fetch("/api/produtos")
+            ]);
+
+            if (!respostaCategorias.ok || !respostaProdutos.ok) {
+                throw new Error("Não foi possível carregar o catálogo.");
+            }
+
+            const dadosCategorias = await respostaCategorias.json();
+            const dadosProdutos = await respostaProdutos.json();
+
+            categorias = dadosCategorias;
+
+            nomesCategoria = {};
+
+            categorias.forEach(categoria => {
+                nomesCategoria[categoria.slug] = categoria.nome;
+            });
+
+            produtos = dadosProdutos.map(dados => new Produto(dados));
+
+            return produtos;
+
+        } catch (erro) {
+            catalogoCarregando = null;
+            console.error("Erro ao carregar o catálogo:", erro);
+            throw erro;
+        }
+    })();
+
+    return catalogoCarregando;
+}
