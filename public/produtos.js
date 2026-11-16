@@ -6,7 +6,13 @@ const contadorCarrinho = document.getElementById("cart-count");
 
 let categoriaAtual = "todos";
 
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+let carrinho = [];
+
+try {
+    carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+} catch (erro) {
+    carrinho = [];
+}
 
 function atualizarContadorCarrinho() {
     const quantidade = carrinho.reduce(
@@ -14,11 +20,12 @@ function atualizarContadorCarrinho() {
         0
     );
 
-    contadorCarrinho.textContent = quantidade;
+    if (contadorCarrinho) {
+        contadorCarrinho.textContent = quantidade;
+    }
 }
 
 function adicionarAoCarrinho(codigoProduto) {
-
     const produto = produtos.find(
         produto => produto.codigo === codigoProduto
     );
@@ -37,7 +44,6 @@ function adicionarAoCarrinho(codigoProduto) {
     );
 
     if (produtoExistente) {
-
         if (produtoExistente.quantidade >= produto.estoque) {
             alert(
                 `Não é possível adicionar mais unidades. ` +
@@ -47,19 +53,14 @@ function adicionarAoCarrinho(codigoProduto) {
         }
 
         produtoExistente.quantidade++;
-
     } else {
-
         carrinho.push({
             codigo: produto.codigo,
             quantidade: 1
         });
     }
 
-    localStorage.setItem(
-        "carrinho",
-        JSON.stringify(carrinho)
-    );
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
 
     atualizarContadorCarrinho();
 }
@@ -84,21 +85,15 @@ const normalizarTexto = texto => {
 
 function buscarProdutosPorNome(lista, textoDigitado) {
     const termo = normalizarTexto(textoDigitado);
-    const encontrados = [];
 
     if (termo === "") {
         return lista;
     }
 
-    for (let i = 0; i < lista.length; i++) {
-        const nomeProduto = normalizarTexto(lista[i].nome);
-
-        if (nomeProduto.includes(termo)) {
-            encontrados.push(lista[i]);
-        }
-    }
-
-    return encontrados;
+    return lista.filter(produto => {
+        const nomeProduto = normalizarTexto(produto.nome);
+        return nomeProduto.includes(termo);
+    });
 }
 
 function mostrarMensagemSemResultado(textoDigitado) {
@@ -108,11 +103,14 @@ function mostrarMensagemSemResultado(textoDigitado) {
     const nomeCategoria = nomesCategoria[categoriaAtual];
 
     if (textoDigitado !== "" && nomeCategoria) {
-        mensagem.textContent = `Nenhum produto encontrado para "${textoDigitado}" em ${nomeCategoria}. Tente outro nome ou veja todos os produtos.`;
+        mensagem.textContent =
+            `Nenhum produto encontrado para "${textoDigitado}" em ${nomeCategoria}. Tente outro nome ou veja todos os produtos.`;
     } else if (textoDigitado !== "") {
-        mensagem.textContent = `Nenhum produto encontrado para "${textoDigitado}". Tente buscar por outro nome.`;
+        mensagem.textContent =
+            `Nenhum produto encontrado para "${textoDigitado}". Tente buscar por outro nome.`;
     } else {
-        mensagem.textContent = "Nenhum produto disponível nesta categoria.";
+        mensagem.textContent =
+            "Nenhum produto disponível nesta categoria.";
     }
 
     container.appendChild(mensagem);
@@ -130,7 +128,7 @@ function mostrarProdutos(lista, textoDigitado = "") {
         const card = document.createElement("div");
         card.classList.add("product-card");
 
-        const disponivel = produto.estoque > 0;
+        const disponivel = produto.disponivel();
 
         card.innerHTML = `
             <div class="product-image">
@@ -138,7 +136,9 @@ function mostrarProdutos(lista, textoDigitado = "") {
             </div>
 
             <div class="product-info">
-                <span class="product-category">${nomesCategoria[produto.categoria] || produto.categoria}</span>
+                <span class="product-category">
+                    ${nomesCategoria[produto.categoria] || produto.categoria}
+                </span>
 
                 <h3>${produto.nome}</h3>
 
@@ -155,7 +155,11 @@ function mostrarProdutos(lista, textoDigitado = "") {
                 </p>
 
                 <p class="stock ${disponivel ? "" : "indisponivel"}">
-                    ${disponivel ? `Estoque disponível: ${produto.estoque}` : "Produto sem estoque"}
+                    ${
+                        disponivel
+                            ? `Estoque disponível: ${produto.estoque}`
+                            : "Produto sem estoque"
+                    }
                 </p>
 
                 <button class="add-cart">
@@ -190,7 +194,10 @@ function aplicarFiltros() {
         );
     }
 
-    produtosFiltrados = buscarProdutosPorNome(produtosFiltrados, textoDigitado);
+    produtosFiltrados = buscarProdutosPorNome(
+        produtosFiltrados,
+        textoDigitado
+    );
 
     mostrarProdutos(produtosFiltrados, textoDigitado);
 }
@@ -239,7 +246,20 @@ campoPesquisa.addEventListener("keydown", evento => {
     }
 });
 
-lerParametrosDaUrl();
-aplicarFiltros();
+async function inicializarPaginaProdutos() {
+    container.innerHTML = "<p>Carregando produtos...</p>";
 
-atualizarContadorCarrinho();
+    try {
+        await carregarCatalogo();
+
+        lerParametrosDaUrl();
+        aplicarFiltros();
+        atualizarContadorCarrinho();
+
+    } catch (erro) {
+        container.innerHTML =
+            '<p class="no-products">Não foi possível carregar os produtos. Verifique sua conexão e tente novamente.</p>';
+    }
+}
+
+inicializarPaginaProdutos();
