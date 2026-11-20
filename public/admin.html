@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo | Outline</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <header class="admin-header">
+        <h1>Outline</h1>
+        <span>Painel Administrativo</span>
+    </header>
+
+    <main class="admin-container">
+
+        <section class="admin-welcome">
+            <h2>Bem-vindo ao painel administrativo!</h2>
+            <p>Gerencie os produtos e acompanhe o estoque da loja.</p>
+        </section>
+
+        <section class="admin-cards">
+
+            <article class="admin-card">
+                <h3>Total de produtos</h3>
+                <p id="totalProdutos">--</p>
+            </article>
+
+            <article class="admin-card">
+                <h3>Estoque baixo</h3>
+                <p id="estoqueBaixo">--</p>
+            </article>
+
+            <article class="admin-card">
+                <h3>Produtos esgotados</h3>
+                <p id="produtosEsgotados">--</p>
+            </article>
+
+        </section>
+
+        <section class="admin-section">
+            <h2>Gerenciamento</h2>
+
+            <div class="admin-actions">
+                <a href="produtos.html">Gerenciar produtos</a>
+                <a href="#estoque">Gerenciar estoque</a>
+            </div>
+        </section>
+
+        <section class="admin-section" id="estoque">
+            <h2>Situação do estoque</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Produto</th>
+                            <th>Categoria</th>
+                            <th>Quantidade</th>
+                            <th>Estoque mínimo</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="listaEstoque">
+                        <tr>
+                            <td colspan="6">Carregando produtos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="admin-section">
+            <h2>Movimentações de estoque</h2>
+
+            <form id="formMovimentacao">
+                <input type="text" id="codigoProduto"
+                    placeholder="Código do produto" required>
+
+                <select id="tipoMovimentacao" required>
+                    <option value="">Tipo de movimentação</option>
+                    <option value="entrada">Entrada</option>
+                    <option value="saida">Saída</option>
+                    <option value="ajuste">Ajuste</option>
+                </select>
+
+                <input type="number" id="quantidade"
+                    placeholder="Quantidade" min="0" required>
+
+                <input type="text" id="motivo"
+                    placeholder="Motivo da movimentação" required>
+
+                <button type="submit">Registrar movimentação</button>
+            </form>
+
+            <p id="mensagemMovimentacao"></p>
+        </section>
+
+        <section class="admin-section">
+            <h2>Histórico de movimentações</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Tipo</th>
+                            <th>Quantidade</th>
+                            <th>Motivo</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="historicoEstoque">
+                        <tr>
+                            <td colspan="5">Carregando histórico...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="admin.js"></script>
+
+</body>
+</html>
