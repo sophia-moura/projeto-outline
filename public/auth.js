@@ -114,6 +114,11 @@ function renderizarConta() {
 
     const usuario = Auth.usuario();
     const estaAutenticado = Auth.estaLogado();
+    const linkAdmin = document.getElementById("admin-link");
+
+if (linkAdmin) {
+    linkAdmin.hidden = !estaAutenticado || usuario.perfil !== "admin";
+}
 
     visitante.hidden = estaAutenticado;
     logado.hidden = !estaAutenticado;
