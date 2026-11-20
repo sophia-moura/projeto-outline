@@ -115,9 +115,14 @@ function renderizarConta() {
     const usuario = Auth.usuario();
     const estaAutenticado = Auth.estaLogado();
     const linkAdmin = document.getElementById("admin-link");
+const linkPedidos = document.getElementById("orders-link");
 
 if (linkAdmin) {
     linkAdmin.hidden = !estaAutenticado || usuario.perfil !== "admin";
+}
+
+if (linkPedidos) {
+    linkPedidos.hidden = !estaAutenticado || usuario.perfil !== "cliente";
 }
 
     visitante.hidden = estaAutenticado;

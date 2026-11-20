@@ -50,7 +50,19 @@
             <p class="eyebrow">Sua conta</p>
             <h1 class="section-heading">Entrar</h1>
             <p class="section-copy">Entre para finalizar sua compra. Os itens do seu carrinho serão mantidos.</p>
+<div class="tipo-acesso">
+    <button type="button" class="acesso-card selecionado" data-perfil="cliente">
+        <span class="acesso-icone">♙</span>
+        <strong>Área do Cliente</strong>
+        <small>Comprar e acompanhar pedidos</small>
+    </button>
 
+    <button type="button" class="acesso-card" data-perfil="admin">
+        <span class="acesso-icone">⚙</span>
+        <strong>Área Administrativa</strong>
+        <small>Gerenciar produtos, estoque e pedidos</small>
+    </button>
+</div>
             <form class="auth-form" id="auth-form" novalidate>
                 <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" autocomplete="email">
@@ -114,6 +126,21 @@
         const formulario = document.getElementById("auth-form");
         const erro = document.getElementById("auth-error");
         const botao = formulario.querySelector('button[type="submit"]');
+        let perfilSelecionado = "cliente";
+
+const cartoes = document.querySelectorAll(".acesso-card");
+
+cartoes.forEach(cartao => {
+    cartao.addEventListener("click", () => {
+        perfilSelecionado = cartao.dataset.perfil;
+
+        cartoes.forEach(item => {
+            item.classList.remove("selecionado");
+        });
+
+        cartao.classList.add("selecionado");
+    });
+});
 
         const mostrarErro = texto => {
             erro.textContent = texto;
@@ -169,6 +196,15 @@
                     return;
                 }
 
+                if (dados.usuario.perfil !== perfilSelecionado) {
+    mostrarErro(
+        perfilSelecionado === "admin"
+            ? "Esta conta não possui acesso administrativo."
+            : "Selecione a área correspondente ao seu perfil."
+    );
+    return;
+}
+
                 const sessaoSalva = Auth.entrar(dados.usuario, dados.token);
 
                 if (!sessaoSalva) {
@@ -176,7 +212,11 @@
                     return;
                 }
 
-                window.location.href = Auth.paginaRetorno();
+                if (dados.usuario.perfil === "admin") {
+    window.location.href = "admin.html";
+} else {
+    window.location.href = Auth.paginaRetorno();
+}
 
             } catch (erro) {
                 console.error("Erro ao realizar login:", erro);

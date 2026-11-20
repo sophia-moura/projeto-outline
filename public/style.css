@@ -401,3 +401,54 @@ button { cursor: pointer; }
     .cart-item-info { min-width: calc(100% - 115px); }
     .footer-container { grid-template-columns: 1fr; }
 }
+
+.tipo-acesso {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.acesso-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 22px 15px;
+    border: 1px solid #d8c9b5;
+    border-radius: 12px;
+    background: #fff;
+    color: #40352b;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.acesso-card:hover {
+    border-color: #9b7955;
+    transform: translateY(-3px);
+}
+
+.acesso-card.selecionado {
+    border: 2px solid #9b7955;
+    background: #f5eee5;
+}
+
+.acesso-icone {
+    font-size: 28px;
+}
+
+.acesso-card strong {
+    font-size: 15px;
+}
+
+.acesso-card small {
+    font-size: 12px;
+    text-align: center;
+    color: #76695d;
+}
+
+@media (max-width: 480px) {
+    .tipo-acesso {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outline | Meus pedidos</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .pedidos-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .pedido-card {
+            background: #fff;
+            border: 1px solid #e2d8cc;
+            border-radius: 12px;
+            padding: 22px;
+            margin: 20px 0;
+        }
+
+        .pedido-card h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .pedido-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 12px 0;
+        }
+
+        .pedido-itens {
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+
+        .pedido-item {
+            margin: 10px 0;
+        }
+
+        .pedido-total {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .mensagem-pedidos {
+            margin: 25px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="announcement">
+        Bem-vindo à sua área de pedidos Outline
+    </div>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="index.html" class="logo-box">
+                <img src="imagens/png/logo.png" alt="Outline" class="logo">
+            </a>
+
+            <div class="main-nav">
+                <a href="index.html">Início</a>
+                <a href="produtos.html">Produtos</a>
+            </div>
+
+            <div class="actions">
+                <button type="button" id="logout-button">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pedidos-container">
+        <p class="eyebrow">Sua conta</p>
+        <h1 class="section-heading">Meus pedidos</h1>
+        <p>Acompanhe as compras realizadas na Outline.</p>
+
+        <div id="lista-pedidos" class="mensagem-pedidos">
+            Carregando seus pedidos...
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+
+    <script>
+        const listaPedidos = document.getElementById("lista-pedidos");
+
+        const moeda = valor =>
+            Number(valor).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            });
+
+        const dataFormatada = data =>
+            new Date(data).toLocaleDateString("pt-BR");
+
+        async function carregarPedidos() {
+            await Auth.validarSessao();
+
+            if (!Auth.estaLogado()) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            if (Auth.usuario().perfil !== "cliente") {
+                window.location.href = "admin.html";
+                return;
+            }
+
+            try {
+                const resposta = await fetch("/api/pedidos", {
+                    headers: {
+                        "Authorization": `Bearer ${Auth.token()}`
+                    }
+                });
+
+                const dados = await resposta.json();
+
+                if (!resposta.ok) {
+                    throw new Error(dados.erro || "Não foi possível carregar os pedidos.");
+                }
+
+                listaPedidos.innerHTML = "";
+
+                if (dados.length === 0) {
+                    listaPedidos.textContent =
+                        "Você ainda não realizou nenhum pedido.";
+                    return;
+                }
+
+                dados.forEach(pedido => {
+                    const card = document.createElement("article");
+                    card.classList.add("pedido-card");
+
+                    const titulo = document.createElement("h2");
+                    titulo.textContent = `Pedido #${pedido.id}`;
+
+                    const informacoes = document.createElement("div");
+                    informacoes.classList.add("pedido-info");
+
+                    const data = document.createElement("span");
+                    data.textContent = `Data: ${dataFormatada(pedido.data)}`;
+
+                    const situacao = document.createElement("span");
+                    situacao.textContent = `Situação: ${pedido.situacao}`;
+
+                    informacoes.append(data, situacao);
+
+                    const itens = document.createElement("div");
+                    itens.classList.add("pedido-itens");
+
+                    const subtitulo = document.createElement("strong");
+                    subtitulo.textContent = "Produtos:";
+
+                    itens.appendChild(subtitulo);
+
+                    pedido.itens.forEach(item => {
+                        const linha = document.createElement("p");
+                        linha.classList.add("pedido-item");
+                        linha.textContent =
+                            `${item.nome} — Quantidade: ${item.quantidade} — ${moeda(item.preco_unitario)}`;
+
+                        itens.appendChild(linha);
+                    });
+
+                    const total = document.createElement("p");
+                    total.classList.add("pedido-total");
+                    total.textContent = `Total: ${moeda(pedido.valor_final)}`;
+
+                    card.append(titulo, informacoes, itens, total);
+                    listaPedidos.appendChild(card);
+                });
+
+            } catch (erro) {
+                console.error("Erro ao carregar pedidos:", erro);
+                listaPedidos.textContent = erro.message;
+            }
+        }
+
+        carregarPedidos();
+    </script>
+
+</body>
+</html>
