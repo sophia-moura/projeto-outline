@@ -1,0 +1,41 @@
+.conta-wrapper {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.card-cliente, .pedido-item {
+  background: #ffffff;
+  border: 2px dotted #4e1e0a8c;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.conta-wrapper h2 {
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    color: #290701;
+}
+
+.pedido-item {
+  margin-bottom: 1rem;
+}
+
+.pedido-topo {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+.pedido-itens {
+  margin: 0.5rem 0 0.5rem 1.2rem;
+  color: #555;
+}
