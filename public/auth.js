@@ -122,7 +122,7 @@ if (linkAdmin) {
 }
 
 if (linkPedidos) {
-    linkPedidos.hidden = !estaAutenticado || usuario.perfil !== "cliente";
+    linkPedidos.hidden = !estaAutenticado || usuario.perfil !== "admin";
 }
 
     visitante.hidden = estaAutenticado;
