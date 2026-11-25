@@ -1,6 +1,6 @@
 const Auth = {
     CHAVE: "usuarioLogado",
-    PAGINAS_RETORNO_PERMITIDAS: ["carrinho.html", "produtos.html", "index.html"],
+    PAGINAS_RETORNO_PERMITIDAS: ["carrinho.html", "produtos.html", "index.html","PaginaCliente.html"],
 
     usuario() {
         try {
@@ -122,7 +122,7 @@ if (linkAdmin) {
 }
 
 if (linkPedidos) {
-    linkPedidos.hidden = !estaAutenticado || usuario.perfil !== "cliente";
+    linkPedidos.hidden = !estaAutenticado || usuario.perfil !== "admin";
 }
 
     visitante.hidden = estaAutenticado;

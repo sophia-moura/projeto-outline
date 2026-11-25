@@ -69,6 +69,7 @@
             <div class="main-nav">
                 <a href="index.html">Início</a>
                 <a href="produtos.html">Produtos</a>
+                <a href="admin.html">Painel</a>
             </div>
 
             <div class="actions">
@@ -109,8 +110,8 @@
                 return;
             }
 
-            if (Auth.usuario().perfil !== "cliente") {
-                window.location.href = "admin.html";
+            if (Auth.usuario().perfil !== "admin") {
+                window.location.href = "PaginaCliente.html";
                 return;
             }
 
@@ -151,8 +152,11 @@
                     const situacao = document.createElement("span");
                     situacao.textContent = `Situação: ${pedido.situacao}`;
 
-                    informacoes.append(data, situacao);
+                    const cliente = document.createElement("span");
+                    cliente.textContent = `Cliente: ${pedido.cliente.nome}`;
 
+                    informacoes.append(data, situacao, cliente);
+                    
                     const itens = document.createElement("div");
                     itens.classList.add("pedido-itens");
 
